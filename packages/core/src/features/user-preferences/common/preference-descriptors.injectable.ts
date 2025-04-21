@@ -32,6 +32,8 @@ import type {
   TerminalConfig,
 } from "./preferences-helpers";
 
+import { defaultHotbarCells, minHotbarCells } from "../../hotbar/storage/common/types";
+
 export type PreferenceDescriptors = ReturnType<(typeof userPreferenceDescriptorsInjectable)["instantiate"]>;
 
 const userPreferenceDescriptorsInjectable = getInjectable({
@@ -41,6 +43,12 @@ const userPreferenceDescriptorsInjectable = getInjectable({
     const mainKubeFolderPath = di.inject(kubeDirectoryPathInjectable);
 
     return {
+      hotbarCells: getPreferenceDescriptor<number>({
+        fromStore: (val) => val ?? defaultHotbarCells,
+        toStore: (val) => val === defaultHotbarCells || val < minHotbarCells
+          ? undefined
+          : val,
+      }),
       httpsProxy: getPreferenceDescriptor<string | undefined>({
         fromStore: (val) => val,
         toStore: (val) => val || undefined,
