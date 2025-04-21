@@ -25,4 +25,13 @@ export interface CreateHotbarOptions {
   setActive?: boolean;
 }
 
-export const defaultHotbarCells = 12; // Number is chosen to easy hit any item with keyboard
+export let defaultHotbarCells = 12;
+
+export const minHotbarCells = 5;
+
+export function setDefaultHotbarCells(value: number) {
+  if (value >= minHotbarCells
+  ) {
+    defaultHotbarCells = value;
+  }
+}
