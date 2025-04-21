@@ -7,6 +7,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -394,6 +432,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -432,16 +480,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -1002,44 +1040,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Animate slide-right Drawer HelmChartDetails right enter"
@@ -1261,6 +1261,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
     <div
       class="Notifications flex column align-flex-end"
     />
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -1912,6 +1950,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given changing version to be installed renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -1950,16 +1998,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given changing version to be installed renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -2826,44 +2864,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Select__menu-portal css-yj2v5g"
@@ -2903,6 +2903,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
     <div
       class="Notifications flex column align-flex-end"
     />
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -3772,6 +3810,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given changing version to be installed when version is selected when default configuration resolves renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -3810,16 +3858,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given changing version to be installed when version is selected when default configuration resolves renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -4684,6 +4722,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given custom name is inputted renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -4722,16 +4770,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given custom name is inputted renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -5596,6 +5634,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given invalid change in configuration renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -5634,16 +5682,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given invalid change in configuration renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -6530,6 +6568,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given namespace selection is opened renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -6568,16 +6616,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given namespace selection is opened renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -7444,44 +7482,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Select__menu-portal css-yj2v5g"
@@ -7521,6 +7521,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
     <div
       class="Notifications flex column align-flex-end"
     />
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -8385,6 +8423,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given no changes in configuration, when installing the chart renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -8423,16 +8471,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given no changes in configuration, when installing the chart renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -9305,6 +9343,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given no changes in configuration, when installing the chart when installation resolves renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -9343,16 +9391,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given no changes in configuration, when installing the chart when installation resolves renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -10037,44 +10075,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
 </body>
 `;
@@ -10131,6 +10131,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
           </i>
         </div>
       </div>
+    </div>
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
     </div>
     <div
       class="mainLayout"
@@ -10756,44 +10794,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Animate slide-right Drawer ReleaseDetails dark right enter"
@@ -10911,6 +10911,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
           </i>
         </div>
       </div>
+    </div>
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
     </div>
     <div
       class="mainLayout"
@@ -11596,44 +11634,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Animate opacity-scale Dialog flex center LogsDialog modal enter"
@@ -11704,6 +11704,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
     <div
       class="Notifications flex column align-flex-end"
     />
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -12568,44 +12606,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Animate slide-right Drawer HelmChartDetails right enter"
@@ -12827,6 +12827,44 @@ exports[`installing helm chart from new tab given tab for installing chart was n
     <div
       class="Notifications flex column align-flex-end"
     />
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -13530,6 +13568,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given opening details for second chart, when details resolve when selecting to install second chart when configuration and versions resolve renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -13568,16 +13616,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given opening details for second chart, when details resolve when selecting to install second chart when configuration and versions resolve renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -14496,6 +14534,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given opening details for second chart, when details resolve when selecting to install second chart when configuration and versions resolve when selecting the dock tab for installing first chart renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -14534,16 +14582,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given opening details for second chart, when details resolve when selecting to install second chart when configuration and versions resolve when selecting the dock tab for installing first chart renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -15460,6 +15498,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given valid change in configuration renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -15498,16 +15546,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve given valid change in configuration renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -16372,6 +16410,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -16410,16 +16458,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -17284,6 +17322,16 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve when cancelled renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -17322,16 +17370,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`installing helm chart from new tab given tab for installing chart was not previously opened and application is started when navigating to helm charts when selecting to install the chart when default configuration and versions resolve when cancelled renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -17891,44 +17929,6 @@ exports[`installing helm chart from new tab given tab for installing chart was n
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
 </body>

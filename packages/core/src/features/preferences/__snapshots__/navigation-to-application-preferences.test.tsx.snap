@@ -412,6 +412,40 @@ exports[`preferences - navigation to application preferences given in preference
                 class="HorizontalLine size-xl"
               />
               <div
+                data-preference-item-test="hotbar-cells"
+              >
+                <section>
+                  <div
+                    class="SubTitle"
+                  >
+                    Hotbar Cells Amount
+                     
+                  </div>
+                  <div
+                    class="Input theme round black"
+                  >
+                    <label
+                      class="input-area flex gaps align-center"
+                      id=""
+                    >
+                      <input
+                        class="input box grow"
+                        min="5"
+                        spellcheck="false"
+                        type="number"
+                        value="12"
+                      />
+                    </label>
+                    <div
+                      class="input-info flex gaps"
+                    />
+                  </div>
+                </section>
+              </div>
+              <div
+                class="HorizontalLine size-xl"
+              />
+              <div
                 data-preference-item-test="timezone"
               >
                 <section
@@ -1068,6 +1102,40 @@ exports[`preferences - navigation to application preferences given in preference
                       type="checkbox"
                     />
                   </label>
+                </section>
+              </div>
+              <div
+                class="HorizontalLine size-xl"
+              />
+              <div
+                data-preference-item-test="hotbar-cells"
+              >
+                <section>
+                  <div
+                    class="SubTitle"
+                  >
+                    Hotbar Cells Amount
+                     
+                  </div>
+                  <div
+                    class="Input theme round black"
+                  >
+                    <label
+                      class="input-area flex gaps align-center"
+                      id=""
+                    >
+                      <input
+                        class="input box grow"
+                        min="5"
+                        spellcheck="false"
+                        type="number"
+                        value="12"
+                      />
+                    </label>
+                    <div
+                      class="input-info flex gaps"
+                    />
+                  </div>
                 </section>
               </div>
               <div
@@ -2174,6 +2242,40 @@ exports[`preferences - navigation to application preferences given in some child
                 class="HorizontalLine size-xl"
               />
               <div
+                data-preference-item-test="hotbar-cells"
+              >
+                <section>
+                  <div
+                    class="SubTitle"
+                  >
+                    Hotbar Cells Amount
+                     
+                  </div>
+                  <div
+                    class="Input theme round black"
+                  >
+                    <label
+                      class="input-area flex gaps align-center"
+                      id=""
+                    >
+                      <input
+                        class="input box grow"
+                        min="5"
+                        spellcheck="false"
+                        type="number"
+                        value="12"
+                      />
+                    </label>
+                    <div
+                      class="input-info flex gaps"
+                    />
+                  </div>
+                </section>
+              </div>
+              <div
+                class="HorizontalLine size-xl"
+              />
+              <div
                 data-preference-item-test="timezone"
               >
                 <section
@@ -2831,6 +2933,40 @@ exports[`preferences - navigation to application preferences given in some child
                         type="checkbox"
                       />
                     </label>
+                  </section>
+                </div>
+                <div
+                  class="HorizontalLine size-xl"
+                />
+                <div
+                  data-preference-item-test="hotbar-cells"
+                >
+                  <section>
+                    <div
+                      class="SubTitle"
+                    >
+                      Hotbar Cells Amount
+                       
+                    </div>
+                    <div
+                      class="Input theme round black"
+                    >
+                      <label
+                        class="input-area flex gaps align-center"
+                        id=""
+                      >
+                        <input
+                          class="input box grow"
+                          min="5"
+                          spellcheck="false"
+                          type="number"
+                          value="12"
+                        />
+                      </label>
+                      <div
+                        class="input-info flex gaps"
+                      />
+                    </div>
                   </section>
                 </div>
                 <div
