@@ -79,9 +79,8 @@ const NonInjectedHotbarMenu = observer((props: Dependencies & HotbarMenuProps) =
     return draggableItemIndex > cellIndex ? "animateDown" : "animateUp";
   };
 
-  const renderGrid = () =>
-    hotbar?.items.map((item, index) => {
-      const entity = getEntity(item);
+  const renderGrid = () => hotbar?.items.slice(0, defaultHotbarCells).map((item, index) => {
+    const entity = getEntity(item);
 
       return (
         <Droppable droppableId={`${index}`} key={index}>
