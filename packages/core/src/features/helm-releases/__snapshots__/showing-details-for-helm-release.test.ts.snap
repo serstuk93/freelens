@@ -7,6 +7,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -706,6 +744,16 @@ exports[`showing details for helm release given application is started when navi
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`showing details for helm release given application is started when navigating to helm releases when releases resolve but there is none, renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -744,16 +792,6 @@ exports[`showing details for helm release given application is started when navi
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`showing details for helm release given application is started when navigating to helm releases when releases resolve but there is none, renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -1459,6 +1497,16 @@ exports[`showing details for helm release given application is started when navi
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`showing details for helm release given application is started when navigating to helm releases when releases resolve renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -1497,16 +1545,6 @@ exports[`showing details for helm release given application is started when navi
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`showing details for helm release given application is started when navigating to helm releases when releases resolve renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -2401,44 +2439,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
 </body>
@@ -2451,6 +2451,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -3344,44 +3382,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -3455,6 +3455,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -4348,44 +4386,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -4459,6 +4459,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -5352,44 +5390,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -5708,6 +5708,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -6601,44 +6639,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -6957,6 +6957,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -7851,44 +7889,6 @@ exports[`showing details for helm release given application is started when navi
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Animate slide-right Drawer ReleaseDetails dark right enter"
@@ -8205,6 +8205,44 @@ exports[`showing details for helm release given application is started when navi
     <div
       class="Notifications flex column align-flex-end"
     />
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -8904,44 +8942,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -9260,6 +9260,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -9958,44 +9996,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -10316,6 +10316,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -11210,44 +11248,6 @@ exports[`showing details for helm release given application is started when navi
         </div>
       </div>
     </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
-    </div>
   </div>
   <div
     class="Animate slide-right Drawer ReleaseDetails dark right enter"
@@ -11564,6 +11564,44 @@ exports[`showing details for helm release given application is started when navi
     <div
       class="Notifications flex column align-flex-end"
     />
+    <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -12520,6 +12558,16 @@ exports[`showing details for helm release given application is started when navi
         </div>
       </div>
     </div>
+  </div>
+</body>
+`;
+
+exports[`showing details for helm release given application is started when navigating to helm releases when releases resolve when selecting release to see details when call for release resolves with error renders 1`] = `
+<body>
+  <div>
+    <div
+      class="Notifications flex column align-flex-end"
+    />
     <div
       class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
       style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
@@ -12558,16 +12606,6 @@ exports[`showing details for helm release given application is started when navi
         class="ResizingAnchor horizontal leading"
       />
     </div>
-  </div>
-</body>
-`;
-
-exports[`showing details for helm release given application is started when navigating to helm releases when releases resolve when selecting release to see details when call for release resolves with error renders 1`] = `
-<body>
-  <div>
-    <div
-      class="Notifications flex column align-flex-end"
-    />
     <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
@@ -13462,44 +13500,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -13575,6 +13575,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -14468,44 +14506,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
 </body>
@@ -14518,6 +14518,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -15411,44 +15449,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -15522,6 +15522,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -16415,44 +16453,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -16526,6 +16526,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -17419,44 +17457,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
@@ -17530,6 +17530,44 @@ exports[`showing details for helm release given application is started when navi
       class="Notifications flex column align-flex-end"
     />
     <div
+      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
+      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
+    >
+      <div
+        class="drawer-wrapper flex column"
+      >
+        <div
+          class="drawer-title flex align-center"
+        >
+          <div
+            class="drawer-title-text flex gaps align-center"
+          >
+            
+          </div>
+          <i
+            class="Icon material interactive focusable"
+            tabindex="0"
+          >
+            <span
+              class="icon"
+              data-icon-name="close"
+            >
+              close
+            </span>
+          </i>
+          <div>
+            Close
+          </div>
+        </div>
+        <div
+          class="drawer-content flex column box grow"
+        />
+      </div>
+      <div
+        class="ResizingAnchor horizontal leading"
+      />
+    </div>
+    <div
       class="mainLayout"
       style="--sidebar-width: 200px;"
     >
@@ -18423,44 +18461,6 @@ exports[`showing details for helm release given application is started when navi
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="Animate slide-right Drawer KubeObjectDetails flex column right enter leave"
-      style="--size: 725px; --enter-duration: 100ms; --leave-duration: 100ms;"
-    >
-      <div
-        class="drawer-wrapper flex column"
-      >
-        <div
-          class="drawer-title flex align-center"
-        >
-          <div
-            class="drawer-title-text flex gaps align-center"
-          >
-            
-          </div>
-          <i
-            class="Icon material interactive focusable"
-            tabindex="0"
-          >
-            <span
-              class="icon"
-              data-icon-name="close"
-            >
-              close
-            </span>
-          </i>
-          <div>
-            Close
-          </div>
-        </div>
-        <div
-          class="drawer-content flex column box grow"
-        />
-      </div>
-      <div
-        class="ResizingAnchor horizontal leading"
-      />
     </div>
   </div>
   <div
