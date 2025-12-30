@@ -65,6 +65,12 @@ Run it from the directory:
 pnpm start
 ```
 
+### Development via nmp 
+
+```sh
+npm run dev
+```
+
 ### Cross compilation
 
 You can build arm64 binary on Linux amd64 or amd64 binary on MacOS arm64.
