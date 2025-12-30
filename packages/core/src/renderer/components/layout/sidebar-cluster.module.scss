@@ -49,6 +49,10 @@
   margin-right: calc(var(--margin) * 1.5);
 }
 
+.avatar.prodBorder {
+  border: 2px solid red;
+}
+
 .loadingAvatar {
   position: relative;
   pointer-events: none;
