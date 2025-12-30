@@ -34,9 +34,11 @@
   }
 
   .HotbarItems {
-    --cellWidth: 40px;
-    --cellHeight: 40px;
-
+    //--cellWidth: 80px;
+    //--cellHeight: 30px;
+    --cellWidth: 100px;
+      --cellHeight: 40px;
+    font-size: smaller;
     box-sizing: content-box;
     margin: 0 auto;
     height: 100%;
