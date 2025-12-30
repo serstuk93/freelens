@@ -9,7 +9,7 @@ import { Tooltip } from "@freelensapp/tooltip";
 import { withInjectables } from "@ogre-tools/injectable-react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import visitEntityContextMenuInjectable from "../../../common/catalog/visit-entity-context-menu.injectable";
 import { broadcastMessage } from "../../../common/ipc";
 import { IpcRendererNavigationEvents } from "../../../common/ipc/navigation-events";
@@ -19,6 +19,10 @@ import navigateInjectable from "../../navigation/navigate.injectable";
 import { Avatar } from "../avatar";
 import { Menu, MenuItem } from "../menu";
 import styles from "./sidebar-cluster.module.scss";
+
+// import { useAsync } from "react-use";
+import { configMapApiInjectable } from "@freelensapp/kube-api-specifics";
+
 
 import type { VisitEntityContextMenu } from "../../../common/catalog/visit-entity-context-menu.injectable";
 import type { ActiveHotbarModel } from "../../../features/hotbar/storage/common/toggling.injectable";
@@ -35,6 +39,7 @@ interface Dependencies {
   normalizeMenuItem: NormalizeCatalogEntityContextMenu;
   visitEntityContextMenu: VisitEntityContextMenu;
   entityInActiveHotbar: ActiveHotbarModel;
+  configMapApi: any;
 }
 
 const NonInjectedSidebarCluster = observer(
@@ -43,10 +48,36 @@ const NonInjectedSidebarCluster = observer(
     visitEntityContextMenu: onContextMenuOpen,
     navigate,
     normalizeMenuItem,
+    configMapApi,
     entityInActiveHotbar,
   }: Dependencies & SidebarClusterProps) => {
     const [menuItems] = useState(observable.array<CatalogEntityContextMenu>());
     const [opened, setOpened] = useState(false);
+    const [avatarTitle, setAvatarTitle] = useState("DEV");
+
+    useEffect(() => {
+      let cancelled = false;
+
+      async function fetchClusterType() {
+        if (!clusterEntity) return;
+        try {
+          const configMap = await configMapApi.get({
+            name: "cluster-type",
+            namespace: "kube-system",
+          });
+          const isProductive = configMap?.data?.isProductive === "true";
+          if (!cancelled) setAvatarTitle(isProductive ? "PROD" : "DEV");
+        } catch {
+          if (!cancelled) setAvatarTitle("DEV");
+        }
+      }
+
+      fetchClusterType();
+
+      return () => {
+        cancelled = true;
+      };
+    }, [clusterEntity, configMapApi]);
 
     if (!clusterEntity) {
       // render a Loading version of the SidebarCluster
@@ -100,9 +131,11 @@ const NonInjectedSidebarCluster = observer(
         data-testid="sidebar-cluster-dropdown"
       >
         <Avatar
-          title={clusterEntity.getName()}
+         // title="DEV"
+         title={avatarTitle}
+         // title={clusterEntity.getName().slice(0,6)} // title of cluster in sidebar ( Nodes, Workloads etc.)
           colorHash={`${clusterEntity.getName()}-${clusterEntity.metadata.source}`}
-          size={40}
+          size={24}
           src={clusterEntity.spec.icon?.src}
           background={clusterEntity.spec.icon?.background}
           className={styles.avatar}
@@ -140,5 +173,6 @@ export const SidebarCluster = withInjectables<Dependencies, SidebarClusterProps>
     navigate: di.inject(navigateInjectable),
     normalizeMenuItem: di.inject(normalizeCatalogEntityContextMenuInjectable),
     entityInActiveHotbar: di.inject(activeHotbarInjectable),
+    configMapApi: di.inject(configMapApiInjectable),
   }),
 });
