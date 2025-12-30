@@ -55,12 +55,12 @@ const NonInjectedCatalogEntitySettings = observer((props: CatalogEntitySettingsP
     <>
       <div className={styles.avatarAndName}>
         <Avatar
-          title={entity.getName()}
+          title={entity.getName().slice(0,10)}
           colorHash={`${entity.getName()}-${entity.metadata.source}`}
           src={entity.spec.icon?.src}
           className={styles.settingsAvatar}
           background={entity.spec.icon?.background}
-          size={40}
+          size={30}
         />
         <div className={styles.entityName}>{entity.getName()}</div>
       </div>
