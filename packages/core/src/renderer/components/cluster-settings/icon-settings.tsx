@@ -68,9 +68,9 @@ const NonInjectedClusterIconSetting = observer((props: ClusterIconSettingProps &
             label={
               <Avatar
                 colorHash={`${entity.getName()}-${entity.metadata.source}`}
-                title={entity.getName()}
+                title={entity.getName().slice(0,28)} //.slice(0,28)} 
                 src={entity.spec.icon?.src}
-                size={53}
+                size={53} // right avatar icon
                 background={entity.spec.icon?.background}
               />
             }
