@@ -9,21 +9,21 @@ import GraphemeSplitter from "grapheme-splitter";
 
 import type { CatalogEntity } from "./catalog-entity";
 
-function getNameParts(name: string): string[] {
-  const byWhitespace = name.split(/\s+/);
+// function getNameParts(name: string): string[] {
+//   const byWhitespace = name.split(/\s+/);
 
-  if (byWhitespace.length > 1) {
-    return byWhitespace;
-  }
+//   if (byWhitespace.length > 1) {
+//     return byWhitespace;
+//   }
 
-  const byDashes = name.split(/[-_]+/);
+//   const byDashes = name.split(/[-_]+/);
 
-  if (byDashes.length > 1) {
-    return byDashes;
-  }
+//   if (byDashes.length > 1) {
+//     return byDashes;
+//   }
 
-  return name.split(/@+/);
-}
+//   return name.split(/@+/);
+// }
 
 export function limitGraphemeLengthOf(src: string, count: number): string {
   const splitter = new GraphemeSplitter();
@@ -36,13 +36,13 @@ export function computeDefaultShortName(name: string) {
     return "??";
   }
 
-  const [rawFirst, rawSecond, rawThird] = getNameParts(name);
-  const splitter = new GraphemeSplitter();
-  const first = splitter.iterateGraphemes(rawFirst);
-  const second = rawSecond ? splitter.iterateGraphemes(rawSecond) : first;
-  const third = rawThird ? splitter.iterateGraphemes(rawThird) : iter.newEmpty<string>();
-
-  return iter.chain(iter.take(first, 1)).concat(iter.take(second, 1)).concat(iter.take(third, 1)).join("");
+  //const [rawFirst, rawSecond, rawThird] = getNameParts(name);
+  //const splitter = new GraphemeSplitter();
+  //const first = splitter.iterateGraphemes(rawFirst);
+ // const second = rawSecond ? splitter.iterateGraphemes(rawSecond) : first;
+ // const third = rawThird ? splitter.iterateGraphemes(rawThird) : iter.newEmpty<string>();
+  return name.slice(0, 28);
+  // return iter.chain(iter.take(first, 1)).concat(iter.take(second, 1)).concat(iter.take(third, 1)).join("");
 }
 
 export function getShortName(entity: CatalogEntity): string {
