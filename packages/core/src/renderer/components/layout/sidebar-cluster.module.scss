@@ -9,8 +9,10 @@
 .SidebarCluster {
   display: flex;
   align-items: center;
-  padding: calc(var(--padding) * 1.2);
+  // padding: calc(var(--padding) * 1.2);
+  padding: calc(var(--padding) * 1.1);
   cursor: pointer;
+  min-height: 50px;
 
   &:hover {
     background: var(--sidebarLogoBackground);
@@ -30,7 +32,8 @@
 
 .clusterName {
   font-weight: bold;
-  overflow: hidden;
+//  overflow: hidden;
+  overflow: auto;
   word-break: break-word;
   color: var(--textColorAccent);
   display: -webkit-box;
@@ -47,6 +50,7 @@
 .avatar {
   font-weight: 500;
   margin-right: calc(var(--margin) * 1.5);
+  margin-right: calc(var(--margin) * 1.1);
 }
 
 .prodAvatar {
