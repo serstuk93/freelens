@@ -54,6 +54,7 @@ const NonInjectedSidebarCluster = observer(
     const [menuItems] = useState(observable.array<CatalogEntityContextMenu>());
     const [opened, setOpened] = useState(false);
     const [avatarTitle, setAvatarTitle] = useState("DEV");
+    const [isProd, setIsProd] = useState(false);
 
     useEffect(() => {
       let cancelled = false;
@@ -67,8 +68,10 @@ const NonInjectedSidebarCluster = observer(
           });
           const isProductive = configMap?.data?.isProductive === "true";
           if (!cancelled) setAvatarTitle(isProductive ? "PROD" : "DEV");
+          setIsProd(isProductive);
         } catch {
           if (!cancelled) setAvatarTitle("DEV");
+          setIsProd(false);
         }
       }
 
@@ -138,7 +141,7 @@ const NonInjectedSidebarCluster = observer(
           size={24}
           src={clusterEntity.spec.icon?.src}
           background={clusterEntity.spec.icon?.background}
-          className={styles.avatar}
+          className={`${styles.avatar}${isProd ? " " + styles.prodAvatar : ""}`}
         />
         <div className={styles.clusterName} id={tooltipId}>
           {clusterEntity.getName()}

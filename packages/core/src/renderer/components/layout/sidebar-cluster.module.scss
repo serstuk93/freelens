@@ -49,8 +49,61 @@
   margin-right: calc(var(--margin) * 1.5);
 }
 
-.avatar.prodBorder {
-  border: 2px solid red;
+.prodAvatar {
+  position: relative;
+  border: 2px solid black;
+  z-index: 0;
+  overflow: visible;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -0px;
+    left: -0px;
+    width: calc(100% -  0px);
+    height: calc(100% - 0px);
+    pointer-events: none;
+    z-index: 1;
+    box-sizing: border-box;
+
+    border: 4px solid transparent;
+    background: none;
+    box-shadow:
+      0 0 16px 4px #e53935,
+      0 0 32px 8px rgba(229, 57, 53, 0.5),
+      0 0 48px 16px rgba(229, 57, 53, 0.3);
+    animation: prodAvatarPulse 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.8;
+  }
+}
+// Animated glowing red pulse frame
+@keyframes prodAvatarPulse {
+  0% {
+    box-shadow:
+      0 0 8px 0px #e53935,
+      0 0 16px 0px rgba(229, 57, 53, 0.5),
+      0 0 24px 0px rgba(229, 57, 53, 0.3);
+    opacity: 0.15;
+    transform: scale(1);
+  }
+
+  70% {
+    box-shadow:
+      0 0 16px 12px #e53935,
+      0 0 32px 24px rgba(229, 57, 53, 0.5),
+      0 0 48px 32px rgba(229, 57, 53, 0.2);
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+
+  100% {
+    box-shadow:
+      0 0 8px 4px #e53935,
+      0 0 16px 8px rgba(229, 57, 53, 0.5),
+      0 0 24px 16px rgba(229, 57, 53, 0.3);
+    opacity: 0.15;
+    transform: scale(1);
+  }
 }
 
 .loadingAvatar {
