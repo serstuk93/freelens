@@ -136,7 +136,7 @@ const NonInjectedSidebarCluster = observer(
         <Avatar
          // title="DEV"
          title={avatarTitle}
-         // title={clusterEntity.getName().slice(0,6)} // title of cluster in sidebar ( Nodes, Workloads etc.)
+        //  title={clusterEntity.getName().slice(0,6)} // title of cluster in sidebar ( Nodes, Workloads etc.)
           colorHash={`${clusterEntity.getName()}-${clusterEntity.metadata.source}`}
           size={24}
           src={clusterEntity.spec.icon?.src}
