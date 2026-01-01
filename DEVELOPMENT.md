@@ -62,6 +62,12 @@ Run it from the directory:
 pnpm start
 ```
 
+
+###  DEV 
+
+npm run dev
+
+
 ### Clean build
 
 If you encounter build or runtime issues, try a clean rebuild:
