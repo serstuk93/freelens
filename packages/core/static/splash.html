@@ -1,4 +1,4 @@
-<html>
+Put your HTML text here<html>
   <head>
     <style>
     html,
@@ -11,7 +11,7 @@
     }
     body {
       background: #1e2124;
-      color: #6c757d;
+      color: #4caf50;
       font-family: Arial, Helvetica, sans-serif;
     }
     .aligner-center-center {
@@ -39,9 +39,10 @@
       width: 54px;
       height: 54px;
       top: 14px;
+      animation: heartbeat 1s infinite;
     }
     .icon .icon-text {
-      color: #fff;
+      color: #4caf50;
       text-align: center;
       display: inline;
     }
@@ -56,19 +57,35 @@
     .bar {
       position: relative;
       height: 2px;
-      background: #262b2f;
+      background: #ad7fa8;
     }
     .progress {
       position: relative;
       height: 2px;
-      background: #00a7a0;
-      box-shadow: 0 0 20px #00a7a0;
+      background: #c93dce;
+      box-shadow: 0 0 20px #ad7fa8;
       animation-name: loader-animation;
       animation-duration: 1.6s;
       animation-iteration-count: infinite;
       animation-timing-function: ease-in-out;
     }
+    @keyframes heartbeat {
 
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      20%,
+      60% {
+        transform: scale(1.2);
+      }
+
+      40%,
+      80% {
+        transform: scale(1);
+      }
+    }
     @keyframes loader-animation {
       0% {
         left: 0;
@@ -98,7 +115,7 @@
 
     .glow div {
       flex: 1;
-      background: #00a7a0;
+      background: #ad7fa8;
       animation: glow 0.8s infinite alternate ease;
       box-shadow: 0 0 20px #00a7a0;
     }
@@ -188,7 +205,7 @@
               fill-rule="evenodd"
             ></path>
           </svg>
-          <div class="icon-text">Freelens</div>
+          <div class="icon-text">KubeIDE</div>
         </div>
         <div class="loading">
           <div class="bar">

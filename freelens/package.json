@@ -1,8 +1,9 @@
 {
-  "name": "freelens",
+  "name": "kubeide",
   "version": "1.10.3-0",
   "private": true,
-  "description": "Freelens - Free IDE for Kubernetes",
+  "productName": "KubeIDE",
+  "description": "KubeIDE - Free IDE for Kubernetes",
   "keywords": [],
   "homepage": "https://freelens.app",
   "bugs": {
@@ -197,6 +198,5 @@
   "engines": {
     "node": "^24.0.0"
   },
-  "copyright": "© 2024-2026 Freelens Authors",
-  "productName": "Freelens"
+  "copyright": "© 2024-2026 Freelens Authors"
 }
