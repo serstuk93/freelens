@@ -24,7 +24,7 @@ const lensDarkThemeInjectable = getInjectable({
         golden: "#ffc63d",
         halfGray: "#87909c80",
         primary: "#c93dce",
-        textColorPrimary: "#8e9297",
+        textColorPrimary: "#00ff00ff",
         textColorSecondary: "#a0a0a0",
         textColorTertiary: "#909ba6",
         textColorAccent: "#ffffff",
