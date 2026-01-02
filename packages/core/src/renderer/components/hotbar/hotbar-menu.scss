@@ -37,10 +37,13 @@
     //--cellWidth: 80px;
     //--cellHeight: 30px;
     --cellWidth: 100px;
-      --cellHeight: 40px;
+    --cellHeight: 40px;
     font-size: smaller;
     box-sizing: content-box;
     margin: 0 auto;
+    margin-bottom: 0px;
+    margin-top: 0px;
+   // left: 0;
     height: 100%;
     overflow: hidden;
     padding-bottom: 8px;
@@ -51,6 +54,7 @@
       &::-webkit-scrollbar {
         width: 0.4em;
         background: transparent;
+        
         z-index: 1;
       }
 
@@ -63,7 +67,9 @@
       width: var(--cellWidth);
       height: var(--cellHeight);
       min-height: var(--cellHeight);
-      margin: 12px;
+      margin: 8px;
+      margin-bottom: 0px;
+      margin-top: 4px;
       background: var(--clusterMenuCellBackground);
       border-radius: 6px;
       position: relative;
