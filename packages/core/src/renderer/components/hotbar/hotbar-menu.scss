@@ -50,16 +50,17 @@
 
     &:hover {
       overflow: overlay;
+      overflow-x: hidden;
 
       &::-webkit-scrollbar {
         width: 0.4em;
         background: transparent;
-        
         z-index: 1;
       }
 
       &::-webkit-scrollbar-thumb {
         background: var(--borderFaintColor);
+        background-color: var(--textColorPrimary);
       }
     }
 
