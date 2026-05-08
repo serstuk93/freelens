@@ -26,6 +26,7 @@ export interface CreateHotbarOptions {
 }
 
 export let defaultHotbarCells = 12;
+export const initialDefaultHotbarCells = 12;
 
 export const minHotbarCells = 5;
 

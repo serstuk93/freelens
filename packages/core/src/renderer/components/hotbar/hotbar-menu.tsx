@@ -134,8 +134,10 @@ const NonInjectedHotbarMenu = observer((props: Dependencies & HotbarMenuProps) =
 
     return draggableItemIndex > cellIndex ? "animateDown" : "animateUp";
   };
+  const hotbarCells = userPreferencesState.hotbarCells ?? defaultHotbarCells;
 
-  const renderGrid = () => hotbar?.items.slice(0, defaultHotbarCells).map((item, index) => {
+  const renderGrid = () =>
+    hotbar?.items.slice(0, hotbarCells).map((item, index) => {
     const entity = getEntity(item);
 
       return (
@@ -163,7 +165,7 @@ const NonInjectedHotbarMenu = observer((props: Dependencies & HotbarMenuProps) =
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       style={{
-                        zIndex: defaultHotbarCells - index,
+                        zIndex: hotbarCells - index,
                         position: "absolute" as const,
                         ...provided.draggableProps.style,
                       }}
