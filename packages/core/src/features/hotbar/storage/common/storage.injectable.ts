@@ -68,7 +68,7 @@ const hotbarsPersistentStorageInjectable = getInjectable({
         }
 
         for (const hotbar of state.values()) {
-          ensureExactHotbarItemLength(hotbar);
+          ensureExactHotbarItemLength(hotbar, Math.max(defaultHotbarCells, hotbar.items.length));
         }
 
         if (data.activeHotbarId) {
@@ -97,25 +97,26 @@ const hotbarsPersistentStorageInjectable = getInjectable({
 export default hotbarsPersistentStorageInjectable;
 
 /**
- * This function ensures that there are always exactly `defaultHotbarCells`
- * worth of items in the hotbar.
+ * This function ensures that the hotbar has at least `hotbarCells` slots.
+ * If the hotbar has more slots than requested, it preserves the existing length.
  * @param hotbar The hotbar to modify
+ * @param hotbarCells The minimum desired slot count
  */
-function ensureExactHotbarItemLength(hotbar: Hotbar) {
+function ensureExactHotbarItemLength(hotbar: Hotbar, hotbarCells: number) {
   // if there are not enough items
-  while (hotbar.items.length < defaultHotbarCells) {
+  while (hotbar.items.length < hotbarCells) {
     hotbar.items.push(null);
   }
 
   // if for some reason the hotbar was overfilled before, remove as many entries
   // as needed, but prefer empty slots and items at the end first.
-  while (hotbar.items.length > defaultHotbarCells) {
+  while (hotbar.items.length > hotbarCells) {
     const lastNull = hotbar.items.lastIndexOf(null);
 
     if (lastNull >= 0) {
       hotbar.items.splice(lastNull, 1);
     } else {
-      hotbar.items.length = defaultHotbarCells;
+      hotbar.items.length = hotbarCells;
     }
   }
 }

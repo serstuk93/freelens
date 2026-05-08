@@ -21,14 +21,22 @@ interface Dependencies {
 }
 
 const NonInjectedHotbarCells = observer(({ state, switchToNextHotbar, switchToPreviousHotbar }: Dependencies) => {
-  const [hotbarCells, setHotbarCells] = React.useState(defaultHotbarCells.toString());
+  const [hotbarCells, setHotbarCells] = React.useState(
+    (state.hotbarCells ?? defaultHotbarCells).toString(),
+  );
+
+  React.useEffect(() => {
+    setHotbarCells((state.hotbarCells ?? defaultHotbarCells).toString());
+  }, [state.hotbarCells]);
 
   const handleHotbarCellsChange = (value: string) => {
     const newHotbarCells = Number(value);
 
     setHotbarCells(value);
-    setDefaultHotbarCells(newHotbarCells);
 
+    // Update the user preference state instead of global variable
+    state.hotbarCells = newHotbarCells;
+    setDefaultHotbarCells(newHotbarCells);
     switchToNextHotbar();
     switchToPreviousHotbar();
   };
@@ -45,6 +53,9 @@ const NonInjectedHotbarCells = observer(({ state, switchToNextHotbar, switchToPr
         value={hotbarCells}
         onChange={value => {
           setHotbarCells(value);
+         
+          // Update the user preference state
+          state.hotbarCells = Number(value);
           setDefaultHotbarCells(Number(value));
           handleHotbarCellsChange(value);
         }}

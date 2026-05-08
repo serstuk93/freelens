@@ -2,6 +2,7 @@
   "name": "kubeide",
   "version": "1.10.3-0",
   "private": true,
+  "version": "1.9.1-0",
   "productName": "KubeIDE",
   "description": "KubeIDE - Free IDE for Kubernetes",
   "keywords": [],

@@ -32,7 +32,7 @@ import type {
   TerminalConfig,
 } from "./preferences-helpers";
 
-import { defaultHotbarCells, minHotbarCells } from "../../hotbar/storage/common/types";
+import { defaultHotbarCells, initialDefaultHotbarCells, minHotbarCells } from "../../hotbar/storage/common/types";
 
 export type PreferenceDescriptors = ReturnType<(typeof userPreferenceDescriptorsInjectable)["instantiate"]>;
 
@@ -45,7 +45,7 @@ const userPreferenceDescriptorsInjectable = getInjectable({
     return {
       hotbarCells: getPreferenceDescriptor<number>({
         fromStore: (val) => val ?? defaultHotbarCells,
-        toStore: (val) => val === defaultHotbarCells || val < minHotbarCells
+        toStore: (val) => val === initialDefaultHotbarCells || val < minHotbarCells
           ? undefined
           : val,
       }),

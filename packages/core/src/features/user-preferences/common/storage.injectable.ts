@@ -43,6 +43,7 @@ const userPreferencesPersistentStorageInjectable = getInjectable({
         state.downloadKubectlBinaries = descriptors.downloadKubectlBinaries.fromStore(
           preferences.downloadKubectlBinaries,
         );
+        state.hotbarCells = descriptors.hotbarCells.fromStore(preferences.hotbarCells);
         state.downloadMirror = descriptors.downloadMirror.fromStore(preferences.downloadMirror);
         state.downloadCustomMirror = descriptors.downloadCustomMirror.fromStore(preferences.downloadCustomMirror);
         state.editorConfiguration = descriptors.editorConfiguration.fromStore(preferences.editorConfiguration);
@@ -68,6 +69,7 @@ const userPreferencesPersistentStorageInjectable = getInjectable({
       toJSON: () =>
         toJS({
           preferences: {
+            hotbarCells: descriptors.hotbarCells.toStore(state.hotbarCells),
             allowErrorReporting: descriptors.allowErrorReporting.toStore(state.allowErrorReporting),
             allowUntrustedCAs: descriptors.allowUntrustedCAs.toStore(state.allowUntrustedCAs),
             colorTheme: descriptors.colorTheme.toStore(state.colorTheme),
