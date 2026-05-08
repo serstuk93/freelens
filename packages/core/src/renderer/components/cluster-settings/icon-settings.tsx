@@ -72,6 +72,7 @@ const NonInjectedClusterIconSetting = observer((props: ClusterIconSettingProps &
                 src={entity.spec.icon?.src}
                 size={53} // right avatar icon
                 background={entity.spec.icon?.background}
+                variant="rounded"
               />
             }
             onOverSizeLimit={OverSizeLimitStyle.FILTER}
