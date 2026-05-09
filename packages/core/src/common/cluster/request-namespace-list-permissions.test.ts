@@ -230,4 +230,5 @@ const someKubeResource: KubeApiResource = {
   group: "some-api-group",
   kind: "SomeKind",
   namespaced: true,
+  verbs: ["get", "list", "watch"],
 };

@@ -5,6 +5,7 @@
  */
 
 import Joi from "joi";
+import type { KubeApiResource } from "./rbac";
 
 /**
  * JSON serializable metadata type
@@ -204,5 +205,6 @@ export interface ClusterState {
   isAdmin: boolean;
   allowedNamespaces: string[];
   resourcesToShow: string[];
+  knownResources: KubeApiResource[];
   isGlobalWatchEnabled: boolean;
 }
