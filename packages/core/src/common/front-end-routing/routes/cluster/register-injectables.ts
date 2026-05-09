@@ -6,6 +6,8 @@
  * This replaces the webpack-based auto-registration system.
  */
 
+import { registerInjectables as registerApiResourcesInjectables } from "./api-resources/register-injectables";
+import { registerInjectables as registerApiServicesInjectables } from "./api-services/register-injectables";
 import { registerInjectables as registerConfigInjectables } from "./config/register-injectables";
 import { registerInjectables as registerCustomResourcesInjectables } from "./custom-resources/register-injectables";
 import { registerInjectables as registerEventsInjectables } from "./events/register-injectables";
@@ -24,6 +26,16 @@ import type { DiContainerForInjection } from "@ogre-tools/injectable";
 export function registerInjectables(di: DiContainerForInjection): void {
   try {
     registerConfigInjectables(di);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    registerApiResourcesInjectables(di);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    registerApiServicesInjectables(di);
   } catch (e) {
     /* Ignore duplicate registration */
   }

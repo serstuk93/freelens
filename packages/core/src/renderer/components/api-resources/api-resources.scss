@@ -1,0 +1,69 @@
+/**
+ * Copyright (c) Freelens Authors. All rights reserved.
+ * Copyright (c) OpenLens Authors. All rights reserved.
+ * Licensed under MIT License. See LICENSE in root directory for more information.
+ */
+
+.ApiResources {
+  .ApiResourcesHeader {
+    margin-bottom: 20px;
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: var(--textColorSecondary);
+    }
+  }
+
+  .ApiResourcesGroups {
+    .ApiResourceGroup {
+      margin-bottom: 32px;
+
+      h2 {
+        margin: 0 0 16px 0;
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--textColorPrimary);
+        border-bottom: 1px solid var(--borderFaintColor);
+        padding-bottom: 8px;
+      }
+
+      .ApiResourcesTable {
+        width: 100%;
+        border-collapse: collapse;
+
+        th, td {
+          padding: 8px 12px;
+          text-align: left;
+          border-bottom: 1px solid var(--borderFaintColor);
+        }
+
+        th {
+          background: var(--clusterMenuBackground);
+          font-weight: 600;
+          color: var(--textColorPrimary);
+        }
+
+        td {
+          color: var(--textColorSecondary);
+        }
+
+        tr:hover {
+          background: var(--clusterMenuCellBackground);
+        }
+      }
+    }
+  }
+
+  .ApiResourcesEmpty {
+    text-align: center;
+    padding: 40px;
+    color: var(--textColorSecondary);
+    font-style: italic;
+  }
+}

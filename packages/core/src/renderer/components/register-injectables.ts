@@ -7,6 +7,8 @@
  */
 
 import { registerInjectables as registerAddClusterInjectables } from "./add-cluster/register-injectables";
+import { registerInjectables as registerApiResourcesInjectables } from "./api-resources/register-injectables";
+import { registerInjectables as registerApiServicesInjectables } from "./api-services/register-injectables";
 import { registerInjectables as registerBadgeInjectables } from "./badge/register-injectables";
 import { registerInjectables as registerCatalogInjectables } from "./catalog/register-injectables";
 import { registerInjectables as registerClusterInjectables } from "./cluster/register-injectables";
@@ -86,6 +88,16 @@ import type { DiContainerForInjection } from "@ogre-tools/injectable";
 export function registerInjectables(di: DiContainerForInjection): void {
   try {
     registerAddClusterInjectables(di);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    registerApiResourcesInjectables(di);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    registerApiServicesInjectables(di);
   } catch (e) {
     /* Ignore duplicate registration */
   }
