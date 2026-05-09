@@ -52,6 +52,8 @@ export interface KubeApiResource {
   group: string; // api-group, if empty then "core"
   apiName: string;
   namespaced: boolean;
+  verbs: string[];
+  shortNames?: string[];
 }
 
 export interface KubeApiResourceDescriptor {
@@ -66,6 +68,7 @@ export interface KubeApiResourceData {
   kind: string; // resource type (e.g. "Namespace")
   group: string; // api-group, if empty then "core"
   namespaced: boolean;
+  verbs?: string[]; // supported verbs for the resource (e.g. ["get", "list", "watch"])
 }
 
 export const apiResourceRecord: Record<KubeResource, KubeApiResourceData> = {

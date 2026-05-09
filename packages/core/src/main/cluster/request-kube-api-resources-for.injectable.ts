@@ -35,6 +35,8 @@ const requestKubeApiResourcesForInjectable = getInjectable({
               kind: resource.kind,
               group,
               namespaced: resource.namespaced,
+              verbs: resource.verbs || [],
+              shortNames: resource.shortNames || [],
             })),
           };
         } catch (error) {
