@@ -6,16 +6,18 @@
 
 import { getInjectable } from "@ogre-tools/injectable";
 import { navigateToRouteInjectionToken } from "../../../navigate-to-route-injection-token";
-import apiResourcesRouteInjectable from "./api-resources-route.injectable";
+import apiResourcesRouteInjectable, { type ApiResourcesPathParameters } from "./api-resources-route.injectable";
+
+export type NavigateToApiResources = (parameters?: ApiResourcesPathParameters) => void;
 
 const navigateToApiResourcesInjectable = getInjectable({
   id: "navigate-to-api-resources",
 
-  instantiate: (di) => {
+  instantiate: (di): NavigateToApiResources => {
     const navigateToRoute = di.inject(navigateToRouteInjectionToken);
     const route = di.inject(apiResourcesRouteInjectable);
 
-    return () => navigateToRoute(route);
+    return (parameters) => navigateToRoute(route, { parameters });
   },
 });
 

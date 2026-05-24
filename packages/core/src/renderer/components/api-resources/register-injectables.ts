@@ -7,6 +7,8 @@
  */
 
 import apiResourceGroupsInjectable from "./api-resource-groups.injectable";
+import apiResourceGroupsSidebarItemsComputedInjectable from "./api-resource-groups-sidebar-items-computed.injectable";
+import apiResourceGroupsSidebarItemsRegistratorInjectable from "./api-resource-groups-sidebar-items-registrator.injectable";
 import apiResourcesRouteComponentInjectable from "./api-resources-route-component.injectable";
 import apiResourcesSidebarItemInjectable from "./sidebar-item.injectable";
 
@@ -15,6 +17,16 @@ import type { DiContainerForInjection } from "@ogre-tools/injectable";
 export function registerInjectables(di: DiContainerForInjection): void {
   try {
     di.register(apiResourceGroupsInjectable);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    di.register(apiResourceGroupsSidebarItemsComputedInjectable);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    di.register(apiResourceGroupsSidebarItemsRegistratorInjectable);
   } catch (e) {
     /* Ignore duplicate registration */
   }

@@ -10,14 +10,17 @@ import { withInjectables } from "@ogre-tools/injectable-react";
 import { observable } from "mobx";
 import React from "react";
 import { observer } from "mobx-react";
+import { Link } from "react-router-dom";
+import groupBy from "lodash/groupBy";
 
 import { MenuActions } from "../menu/menu-actions";
-import { ItemListLayout, type ItemListStore } from "../item-object-list";
 import { TabLayout } from "../layout/tab-layout-2";
 import { WithTooltip } from "../with-tooltip";
 import { formatKubeApiResource } from "../../../common/rbac";
 import hostedClusterInjectable from "../../cluster-frame-context/hosted-cluster.injectable";
 import { showShortInfoNotificationInjectable } from "@freelensapp/notifications";
+import apiResourcesRouteInjectable from "../../../common/front-end-routing/routes/cluster/api-resources/api-resources-route.injectable";
+import routePathParametersInjectable from "../../routes/route-path-parameters.injectable";
 
 interface ApiResourceItem {
   id: string;
@@ -27,22 +30,23 @@ interface ApiResourceItem {
   namespaced: boolean;
   verbs: string[];
   shortNames?: string[];
-  getId: () => string;
-  getName: () => string;
 }
 
 interface Dependencies {
   hostedCluster: ReturnType<typeof hostedClusterInjectable.instantiate>;
   showShortInfoNotification: (message: string) => void;
+  routePathParameters: ReturnType<typeof routePathParametersInjectable.instantiate>;
 }
 
-const NonInjectedApiResourcesRoute = observer(({ hostedCluster, showShortInfoNotification }: Dependencies) => {
-  const isClusterReady = hostedCluster?.ready.get() ?? false;
-  const [selectedResourceIds] = React.useState(() => observable.set<string>());
+const NonInjectedApiResourcesRoute = observer(({
+  hostedCluster,
+  showShortInfoNotification,
+  routePathParameters,
+}: Dependencies) => {
   const [hiddenResourceIds] = React.useState(() => observable.set<string>());
   const [detailsResourceId, setDetailsResourceId] = React.useState<string | undefined>();
 
-  const resources = (hostedCluster?.knownResources ?? [])
+  const allResources = (hostedCluster?.knownResources ?? [])
     .map((resource) => ({
       id: formatKubeApiResource(resource),
       apiVersion: resource.group || "core",
@@ -51,59 +55,18 @@ const NonInjectedApiResourcesRoute = observer(({ hostedCluster, showShortInfoNot
       namespaced: resource.namespaced,
       verbs: resource.verbs,
       shortNames: resource.shortNames,
-      getId: () => formatKubeApiResource(resource),
-      getName: () => resource.apiName,
     }))
-    .filter((resource) => !hiddenResourceIds.has(resource.id))
-    .sort((a, b) => a.apiVersion.localeCompare(b.apiVersion));
+    .filter((resource) => !hiddenResourceIds.has(resource.id));
 
-  const selectedResource = resources.find((r) => r.id === detailsResourceId);
-
-  const store: ItemListStore<ApiResourceItem, false> = React.useMemo(
-    () => ({
-      get isLoaded() {
-        return isClusterReady;
-      },
-
-      failedLoading: false,
-
-      getTotalCount: () => resources.length,
-
-      toggleSelection: (resource) => {
-        if (selectedResourceIds.has(resource.id)) {
-          selectedResourceIds.delete(resource.id);
-        } else {
-          selectedResourceIds.add(resource.id);
-        }
-      },
-
-      isSelectedAll: (items) => items.length > 0 && items.every((item) => selectedResourceIds.has(item.id)),
-
-      toggleSelectionAll: (items) => {
-        const shouldSelect = !items.every((item) => selectedResourceIds.has(item.id));
-
-        if (shouldSelect) {
-          items.forEach((item) => selectedResourceIds.add(item.id));
-        } else {
-          items.forEach((item) => selectedResourceIds.delete(item.id));
-        }
-      },
-
-      isSelected: (resource) => selectedResourceIds.has(resource.id),
-
-      pickOnlySelected: (items) => items.filter((item) => selectedResourceIds.has(item.id)),
-
-      removeSelectedItems: async () => {
-        const selected = resources.filter((item) => selectedResourceIds.has(item.id));
-
-        selected.forEach((item) => {
-          hiddenResourceIds.add(item.id);
-          selectedResourceIds.delete(item.id);
-        });
-      },
-    }),
-    [resources, selectedResourceIds, hiddenResourceIds, isClusterReady],
+  const groupedResources = React.useMemo(
+    () => groupBy(allResources, (resource) => resource.apiVersion),
+    [allResources],
   );
+
+  const selectedApiVersion = routePathParameters.get().apiVersion;
+  const resources = selectedApiVersion ? groupedResources[selectedApiVersion] ?? [] : allResources;
+  const resourceCount = resources.length;
+  const selectedResource = resources.find((r) => r.id === detailsResourceId);
 
   const onEditResource = (resource: ApiResourceItem) => {
     showShortInfoNotification(`Editing API resource ${resource.apiName} is not supported.`);
@@ -111,7 +74,9 @@ const NonInjectedApiResourcesRoute = observer(({ hostedCluster, showShortInfoNot
 
   const onDeleteResource = async (resource: ApiResourceItem) => {
     hiddenResourceIds.add(resource.id);
-    selectedResourceIds.delete(resource.id);
+    if (detailsResourceId === resource.id) {
+      setDetailsResourceId(undefined);
+    }
   };
 
   return (
@@ -119,55 +84,59 @@ const NonInjectedApiResourcesRoute = observer(({ hostedCluster, showShortInfoNot
       <div className="ApiResources">
         {!hostedCluster ? (
           <div className="ApiResourcesEmpty">No cluster selected.</div>
-        ) : (
+        ) : selectedApiVersion ? (
           <>
-            <ItemListLayout<ApiResourceItem, false>
-              className="ApiResourcesTable"
-              tableId="api-resources"
-              getItems={() => resources}
-              store={store}
-              preloadStores={false}
-              isConfigurable
-              isReady={isClusterReady}
-              hasDetailsView
-              detailsItem={selectedResource}
-              onDetails={(resource) => setDetailsResourceId(resource.id)}
-              searchFilters={[(resource) => resource.apiVersion, (resource) => resource.apiName, (resource) => resource.kind]}
-              tableProps={{
-                noItems: <div className="ApiResourcesEmpty">No API resources available for this cluster.</div>,
-                sortByDefault: { sortBy: "apiVersion", orderBy: "asc" },
-              }}
-              sortingCallbacks={{
-                apiVersion: (resource) => resource.apiVersion,
-                apiName: (resource) => resource.apiName,
-                kind: (resource) => resource.kind,
-                namespaced: (resource) => resource.namespaced ? 1 : 0,
-                shortNames: (resource) => resource.shortNames?.join(", ") || "",
-                verbs: (resource) => resource.verbs.join(", "),
-              }}
-              renderHeaderTitle="API Resources"
-              renderTableHeader={[
-                { title: "API Group", className: "api-version", sortBy: "apiVersion", id: "apiVersion" },
-                { title: "Name", className: "name", sortBy: "apiName", id: "apiName" },
-                { title: "Kind", className: "kind", sortBy: "kind", id: "kind" },
-                { title: "Namespaced", className: "namespaced", sortBy: "namespaced", id: "namespaced" },
-                { title: "Short Names", className: "short-names", sortBy: "shortNames", id: "shortNames" },
-                { title: "Verbs", className: "verbs", sortBy: "verbs", id: "verbs" },
-              ]}
-              renderTableContents={(resource) => [
-                <WithTooltip>{resource.apiVersion}</WithTooltip>,
-                <WithTooltip>{resource.apiName}</WithTooltip>,
-                <WithTooltip>{resource.kind}</WithTooltip>,
-                { title: resource.namespaced ? "Yes" : "No", className: resource.namespaced ? "namespaced yes" : "namespaced no" },
-                <WithTooltip>{resource.shortNames?.join(", ") || ""}</WithTooltip>,
-                <WithTooltip>{resource.verbs.join(", ")}</WithTooltip>,
-              ]}
-              renderItemMenu={(resource) => (
-                <MenuActions updateAction={() => onEditResource(resource)} removeAction={() => onDeleteResource(resource)} />
+            <div className="ApiResourcesGroupHeader">
+              <Link to="/api-resources" className="ApiResourcesBackLink">
+                ← API resource groups
+              </Link>
+              <div>
+                <h2>{selectedApiVersion} resources</h2>
+                <p className="ApiResourcesGroupSummary">Showing {resourceCount.toLocaleString()} resource{resourceCount === 1 ? "" : "s"} in this group.</p>
+              </div>
+            </div>
+            <div className="ApiResourcesTable">
+              <div className="ApiResourcesTableToolbar">
+                <span className="ApiResourcesTableCount">{resourceCount.toLocaleString()} resources</span>
+              </div>
+              <table className="ApiResourcesTableInner">
+                <thead>
+                  <tr>
+                    <th>API Group</th>
+                    <th>Name</th>
+                    <th>Kind</th>
+                    <th>Namespaced</th>
+                    <th>Short Names</th>
+                    <th>Verbs</th>
+                    <th className="menu-column">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {resources.map((resource) => (
+                    <tr
+                      key={resource.id}
+                      className={resource.id === selectedResource?.id ? "selected" : undefined}
+                      onClick={() => setDetailsResourceId(resource.id)}
+                    >
+                      <td><WithTooltip>{resource.apiVersion}</WithTooltip></td>
+                      <td><WithTooltip>{resource.apiName}</WithTooltip></td>
+                      <td><WithTooltip>{resource.kind}</WithTooltip></td>
+                      <td className={resource.namespaced ? "namespaced yes" : "namespaced no"}>
+                        {resource.namespaced ? "Yes" : "No"}
+                      </td>
+                      <td><WithTooltip>{resource.shortNames?.join(", ") || ""}</WithTooltip></td>
+                      <td><WithTooltip>{resource.verbs.join(", ")}</WithTooltip></td>
+                      <td className="menu-column">
+                        <MenuActions updateAction={() => onEditResource(resource)} removeAction={() => onDeleteResource(resource)} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {resources.length === 0 && (
+                <div className="ApiResourcesEmpty">No API resources available for this API group.</div>
               )}
-              failedToLoadMessage="Failed to load API resources"
-              spinnerTestId="api-resources-spinner"
-            />
+            </div>
             {selectedResource && (
               <div className="ApiResourceDetails">
                 <div className="ApiResourceDetailsPanel">
@@ -201,6 +170,11 @@ const NonInjectedApiResourcesRoute = observer(({ hostedCluster, showShortInfoNot
               </div>
             )}
           </>
+        ) : (
+          <div className="ApiResourcesEmpty">
+            <h2>API Resources</h2>
+            <p>Select an API group from the sidebar to view its resources.</p>
+          </div>
         )}
       </div>
     </TabLayout>
@@ -211,5 +185,6 @@ export const ApiResourcesRoute = withInjectables<Dependencies>(NonInjectedApiRes
   getProps: (di) => ({
     hostedCluster: di.inject(hostedClusterInjectable),
     showShortInfoNotification: di.inject(showShortInfoNotificationInjectable),
+    routePathParameters: di.inject(routePathParametersInjectable, di.inject(apiResourcesRouteInjectable)),
   }),
 });
