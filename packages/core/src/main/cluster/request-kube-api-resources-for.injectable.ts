@@ -27,6 +27,7 @@ const requestKubeApiResourcesForInjectable = getInjectable({
       async ({ group, path }) => {
         try {
           const { resources } = (await k8sRequest(cluster, path)) as V1APIResourceList;
+          const version = path.split("/").at(-1);
 
           return {
             callWasSuccessful: true,
@@ -34,6 +35,7 @@ const requestKubeApiResourcesForInjectable = getInjectable({
               apiName: resource.name,
               kind: resource.kind,
               group,
+              version,
               namespaced: resource.namespaced,
               verbs: resource.verbs || [],
               shortNames: resource.shortNames || [],

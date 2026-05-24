@@ -12,6 +12,7 @@ interface ApiResourceGroup {
   apiVersion: string;
   resources: Array<{
     name: string;
+    version?: string;
     shortNames: string[];
     namespaced: boolean;
     kind: string;
@@ -35,6 +36,7 @@ const apiResourceGroupsInjectable = getInjectable({
 
         resourcesByGroup.push({
           name: resource.apiName,
+          version: resource.version,
           shortNames: [], // TODO: add shortname support to KubeApiResourceDescriptor and populate this field
           namespaced: resource.namespaced,
           kind: resource.kind,
