@@ -480,7 +480,7 @@ export class EditResourceModel {
   save = async () => {
     if (this.copyReady.value.get()) {
       this.dependencies.showErrorNotification(
-        "Copy-ready mode is for copying and recreating resources. Turn it off before saving changes.",
+        "Copy-Ready mode is for copying and recreating resources. Turn it off before saving changes.",
       );
 
       return null;
