@@ -164,6 +164,39 @@ function setEditResourceVersionAnnotation(object: RawKubeObject) {
   object.metadata.annotations[EditResourceAnnotationName] = object.apiVersion.split("/").pop();
 }
 
+const serverOwnedMetadataFields = [
+  "creationTimestamp",
+  "deletionGracePeriodSeconds",
+  "deletionTimestamp",
+  "finalizers",
+  "generation",
+  "managedFields",
+  "ownerReferences",
+  "resourceVersion",
+  "selfLink",
+  "uid",
+] as const;
+
+function cleanCopyReadyResource(object: RawKubeObject): RawKubeObject {
+  const copyReadyObject = structuredClone(object);
+
+  delete copyReadyObject.status;
+
+  if (copyReadyObject.metadata) {
+    for (const field of serverOwnedMetadataFields) {
+      delete copyReadyObject.metadata[field];
+    }
+
+    delete copyReadyObject.metadata.annotations?.["kubectl.kubernetes.io/last-applied-configuration"];
+
+    if (copyReadyObject.metadata.annotations && Object.keys(copyReadyObject.metadata.annotations).length === 0) {
+      delete copyReadyObject.metadata.annotations;
+    }
+  }
+
+  return copyReadyObject;
+}
+
 function getEditSelfLinkFor(object: RawKubeObject): string | undefined {
   const lensVersionAnnotation = object.metadata.annotations?.[EditResourceAnnotationName];
 
@@ -199,12 +232,24 @@ export class EditResourceModel {
   // Store the unsorted YAML when sort is enabled so we can restore it
   @observable private savedUnsortedYaml: string | null = null;
 
+  // Store the editable YAML before switching to a copy/recreate manifest
+  @observable private savedEditableYaml: string | null = null;
+
   readonly managedFields = {
     value: observable.box(false),
 
     onChange: action((value: boolean) => {
       this.managedFields.value.set(value);
       this.toggleManagedFields(value);
+    }),
+  };
+
+  readonly copyReady = {
+    value: observable.box(false),
+
+    onChange: action((value: boolean) => {
+      this.copyReady.value.set(value);
+      this.toggleCopyReady(value);
     }),
   };
 
@@ -323,6 +368,30 @@ export class EditResourceModel {
     }
   };
 
+  toggleCopyReady = (showCopyReady: boolean) => {
+    const currentValue = this.configuration.value.get();
+
+    if (!currentValue) {
+      return;
+    }
+
+    if (showCopyReady) {
+      this.savedEditableYaml = currentValue;
+      this.regenerateYaml();
+
+      return;
+    }
+
+    runInAction(() => {
+      if (this.savedEditableYaml) {
+        this.editingResource.draft = this.savedEditableYaml;
+        this.savedEditableYaml = null;
+      } else {
+        this.regenerateYaml();
+      }
+    });
+  };
+
   regenerateYaml = (sortKeys?: boolean) => {
     if (!this._resource) {
       return;
@@ -330,9 +399,11 @@ export class EditResourceModel {
 
     const omitFields = this.managedFields.value.get() ? [] : ["metadata.managedFields"];
     const shouldSortKeys = sortKeys ?? this.sortKeys.value.get();
+    const resource = this._resource!.toPlainObject(omitFields) as RawKubeObject;
+    const yamlObject = this.copyReady.value.get() ? cleanCopyReadyResource(resource) : resource;
 
     runInAction(() => {
-      const newYaml = yaml.dump(this._resource!.toPlainObject(omitFields), {
+      const newYaml = yaml.dump(yamlObject, {
         ...defaultYamlDumpOptions,
         sortKeys: shouldSortKeys,
       });
@@ -346,7 +417,7 @@ export class EditResourceModel {
 
       // Only set draft if there isn't already a saved draft from previous session
       // OR if we're explicitly regenerating (sortKeys parameter was provided)
-      if (!this.editingResource.draft || sortKeys !== undefined) {
+      if (!this.editingResource.draft || sortKeys !== undefined || this.copyReady.value.get()) {
         this.editingResource.draft = newYaml;
       }
 
@@ -407,6 +478,14 @@ export class EditResourceModel {
   }
 
   save = async () => {
+    if (this.copyReady.value.get()) {
+      this.dependencies.showErrorNotification(
+        "Copy-ready mode is for copying and recreating resources. Turn it off before saving changes.",
+      );
+
+      return null;
+    }
+
     const currentValue = this.configuration.value.get();
     const currentVersion = yaml.load(currentValue) as RawKubeObject;
     const firstVersion = yaml.load(this.editingResource.firstDraft ?? currentValue) as RawKubeObject;
