@@ -8,12 +8,18 @@ import { getInjectable } from "@ogre-tools/injectable";
 import { computed } from "mobx";
 import { frontEndRouteInjectionToken } from "../../../front-end-route-injection-token";
 
+import type { Route } from "../../../front-end-route-injection-token";
+
+export interface ApiResourcesPathParameters {
+  apiVersion?: string;
+}
+
 const apiResourcesRouteInjectable = getInjectable({
   id: "api-resources-route",
 
-  instantiate: () => {
+  instantiate: (): Route<ApiResourcesPathParameters> => {
     return {
-      path: "/api-resources",
+      path: "/api-resources/:apiVersion?",
       clusterFrame: true,
       isEnabled: computed(() => true),
     };
