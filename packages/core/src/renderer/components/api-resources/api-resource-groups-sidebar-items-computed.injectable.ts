@@ -51,7 +51,6 @@ const apiResourceGroupsSidebarItemsComputedInjectable = getInjectable({
             parentId: apiResourcesSidebarItemInjectable.id,
             onClick: () => navigateToApiResources(parameters),
             title: group.apiVersion.replaceAll(".", "\u200b."),
-            getIcon: () => React.createElement(Icon, { material: "label" }),
             isActive: computedAnd(
               isRouteActive,
               computed(() => matches(parameters)(pathParameters.get())),
