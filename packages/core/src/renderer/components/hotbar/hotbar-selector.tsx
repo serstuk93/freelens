@@ -16,7 +16,6 @@ import { withInjectables } from "@ogre-tools/injectable-react";
 import { observer } from "mobx-react";
 import React, { useRef, useState } from "react";
 import activeHotbarInjectable from "../../../features/hotbar/storage/common/active.injectable";
-import computeDisplayIndexInjectable from "../../../features/hotbar/storage/common/compute-display-index.injectable";
 import switchToNextHotbarInjectable from "../../../features/hotbar/storage/common/switch-to-next.injectable";
 import switchToPreviousHotbarInjectable from "../../../features/hotbar/storage/common/switch-to-previous.injectable";
 import { Badge } from "../badge";
@@ -26,17 +25,21 @@ import { HotbarSwitchCommand } from "./hotbar-switch-command";
 
 import type { IComputedValue } from "mobx";
 
-import type { ComputeDisplayIndex } from "../../../features/hotbar/storage/common/compute-display-index.injectable";
 import type { Hotbar } from "../../../features/hotbar/storage/common/hotbar";
 import type { SwitchToNextHotbar } from "../../../features/hotbar/storage/common/switch-to-next.injectable";
 import type { SwitchToPreviousHotbar } from "../../../features/hotbar/storage/common/switch-to-previous.injectable";
+
+const maxHotbarNameLength = 26;
+
+function limitHotbarName(name: string) {
+  return name.length > maxHotbarNameLength ? `${name.slice(0, maxHotbarNameLength)}...` : name;
+}
 
 interface Dependencies {
   activeHotbar: IComputedValue<Hotbar | undefined>;
   openCommandOverlay: (component: React.ReactElement) => void;
   switchToPreviousHotbar: SwitchToPreviousHotbar;
   switchToNextHotbar: SwitchToNextHotbar;
-  computeDisplayIndex: ComputeDisplayIndex;
 }
 
 const NonInjectedHotbarSelector = observer(
@@ -45,11 +48,12 @@ const NonInjectedHotbarSelector = observer(
     openCommandOverlay,
     switchToNextHotbar,
     switchToPreviousHotbar,
-    computeDisplayIndex,
   }: Dependencies) => {
     const [tooltipVisible, setTooltipVisible] = useState(false);
     const tooltipTimeout = useRef<number>();
     const hotbar = activeHotbar.get();
+    const hotbarName = hotbar?.name.get();
+    const displayName = hotbarName ? limitHotbarName(hotbarName) : "??";
 
     function clearTimer() {
       clearTimeout(tooltipTimeout.current);
@@ -83,8 +87,9 @@ const NonInjectedHotbarSelector = observer(
           <Badge
             id="hotbarIndex"
             small
-            label={hotbar ? computeDisplayIndex(hotbar.id) : "??"}
+            label={displayName}
             onClick={() => openCommandOverlay(<HotbarSwitchCommand />)}
+            expandable={false}
             className={styles.Badge}
             onMouseEnter={onMouseEvent}
             onMouseLeave={onMouseEvent}
@@ -96,7 +101,7 @@ const NonInjectedHotbarSelector = observer(
             preferredPositions={[TooltipPosition.TOP, TooltipPosition.TOP_LEFT]}
             data-testid={`hotbar-menu-badge-tooltip-for-${hotbar?.name.get()}`}
           >
-            {hotbar?.name.get()}
+            {hotbarName}
           </Tooltip>
         </div>
         <Icon material="arrow_right" className={styles.Icon} onClick={onNextClick} />
@@ -112,6 +117,5 @@ export const HotbarSelector = withInjectables<Dependencies>(NonInjectedHotbarSel
     activeHotbar: di.inject(activeHotbarInjectable),
     switchToNextHotbar: di.inject(switchToNextHotbarInjectable),
     switchToPreviousHotbar: di.inject(switchToPreviousHotbarInjectable),
-    computeDisplayIndex: di.inject(computeDisplayIndexInjectable),
   }),
 });
