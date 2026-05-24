@@ -27,7 +27,9 @@
 
   .HotbarIndex {
     display: flex;
-    width: 3ch;
+    flex: 1;
+    min-width: 0;
+    max-width: 9ch;
   }
 
   .Badge {
@@ -36,6 +38,9 @@
     width: 100%;
     color: var(--settingsColor);
     padding: 0px calc(var(--padding) / 2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .Icon {
