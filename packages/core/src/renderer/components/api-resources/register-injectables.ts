@@ -6,15 +6,22 @@
  * This replaces the webpack-based auto-registration system.
  */
 
+import apiResourceApiInjectable from "./api-resource.api.injectable";
 import apiResourceGroupsInjectable from "./api-resource-groups.injectable";
 import apiResourceGroupsSidebarItemsComputedInjectable from "./api-resource-groups-sidebar-items-computed.injectable";
 import apiResourceGroupsSidebarItemsRegistratorInjectable from "./api-resource-groups-sidebar-items-registrator.injectable";
 import apiResourcesRouteComponentInjectable from "./api-resources-route-component.injectable";
 import apiResourcesSidebarItemInjectable from "./sidebar-item.injectable";
+import apiResourceStoreInjectable from "./store.injectable";
 
 import type { DiContainerForInjection } from "@ogre-tools/injectable";
 
 export function registerInjectables(di: DiContainerForInjection): void {
+  try {
+    di.register(apiResourceApiInjectable);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
   try {
     di.register(apiResourceGroupsInjectable);
   } catch (e) {
@@ -27,6 +34,11 @@ export function registerInjectables(di: DiContainerForInjection): void {
   }
   try {
     di.register(apiResourceGroupsSidebarItemsRegistratorInjectable);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    di.register(apiResourceStoreInjectable);
   } catch (e) {
     /* Ignore duplicate registration */
   }
