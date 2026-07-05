@@ -291,12 +291,6 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   const activeId = selectedId ?? hoveredId;
   const activeConnected = activeId ? getConnectedSet(activeId) : null;
 
-  function isEdgeHighlighted(fromId: string, toId: string) {
-    if (!activeConnected) return true;
-
-    return activeConnected.has(fromId) && activeConnected.has(toId);
-  }
-
   function handleNodeClick(nodeId: string) {
     setSelectedId(nodeId);
   }
@@ -321,23 +315,12 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
       const fromRect = fromEl.getBoundingClientRect();
       const toRect = toEl.getBoundingClientRect();
 
-      // Both the graph div and nodes scroll together, so subtracting graphRect
-      // gives stable SVG coordinates without needing scrollTop correction.
       const x1 = fromRect.right - graphRect.left;
       const y1 = fromRect.top + fromRect.height / 2 - graphRect.top;
       const x2 = toRect.left - graphRect.left;
       const y2 = toRect.top + toRect.height / 2 - graphRect.top;
 
-      newPaths.push({
-        id: edge.id,
-        x1,
-        y1,
-        x2,
-        y2,
-        color: edge.color,
-        fromId: edge.fromId,
-        toId: edge.toId,
-      });
+      newPaths.push({ id: edge.id, x1, y1, x2, y2, color: edge.color, fromId: edge.fromId, toId: edge.toId });
     }
 
     const json = JSON.stringify(newPaths);
@@ -348,26 +331,29 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Re-compute paths after every render (MobX store changes trigger re-renders)
-  useEffect(() => {
-    computeSvgPaths();
-  });
+  // Re-compute paths after every render
+  useEffect(() => { computeSvgPaths(); });
 
-  // Also recompute on container resize
+  // Recompute on container resize
   useEffect(() => {
     const container = containerRef.current;
 
     if (!container) return;
 
-    const observer = new ResizeObserver(() => {
-      prevPathsJson.current = ""; // force recompute
+    const ro = new ResizeObserver(() => {
+      prevPathsJson.current = "";
       computeSvgPaths();
     });
 
-    observer.observe(container);
+    ro.observe(container);
 
-    return () => observer.disconnect();
+    return () => ro.disconnect();
   }, [computeSvgPaths]);
+
+  function isEdgeHighlighted(fromId: string, toId: string) {
+    if (!activeConnected) return true;
+    return activeConnected.has(fromId) && activeConnected.has(toId);
+  }
 
   // ---- Render helpers ------------------------------------------------------
 
@@ -378,8 +364,12 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
       classes.push("is-orphaned");
     }
 
-    if (nodeId === activeId) {
-      classes.push("is-hovered");
+    if (activeConnected) {
+      if (activeConnected.has(nodeId)) {
+        classes.push("is-highlighted");
+      } else {
+        classes.push("is-dimmed");
+      }
     }
 
     if (nodeId === selectedId) {
@@ -389,13 +379,13 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
     return classes.join(" ");
   }
 
-  // When something is selected, only show connected nodes in each column.
-  const visibleSAs = selectedId ? filteredSAs.filter((sa) => activeConnected?.has(saNodeId(sa.getNs() ?? "", sa.getName()))) : filteredSAs;
-  const visibleNonSaSubjects = selectedId ? filteredNonSaSubjects.filter((s) => activeConnected?.has(s.id)) : filteredNonSaSubjects;
-  const visibleRBs = selectedId ? filteredRBs.filter((rb) => activeConnected?.has(rbNodeId(rb.getNs() ?? "", rb.getName()))) : filteredRBs;
-  const visibleCRBs = selectedId ? filteredCRBs.filter((crb) => activeConnected?.has(crbNodeId(crb.getName()))) : filteredCRBs;
-  const visibleRoles = selectedId ? filteredRoles.filter((r) => activeConnected?.has(roleNodeId(r.getNs() ?? "", r.getName()))) : filteredRoles;
-  const visibleCRs = selectedId ? filteredCRs.filter((cr) => activeConnected?.has(crNodeId(cr.getName()))) : filteredCRs;
+  // All nodes are always shown; highlighting/dimming is done via nodeClass.
+  const visibleSAs = filteredSAs;
+  const visibleNonSaSubjects = filteredNonSaSubjects;
+  const visibleRBs = filteredRBs;
+  const visibleCRBs = filteredCRBs;
+  const visibleRoles = filteredRoles;
+  const visibleCRs = filteredCRs;
 
   const svgHeight = containerRef.current?.scrollHeight ?? 600;
 
@@ -460,11 +450,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
       {/* Graph area */}
       <div className="rbac-visualizer-graph" ref={graphRef}>
         {/* SVG overlay for connection lines */}
-        <svg
-          className="rbac-visualizer-svg"
-          style={{ height: svgHeight }}
-          aria-hidden="true"
-        >
+        <svg className="rbac-visualizer-svg" style={{ height: svgHeight }} aria-hidden="true">
           <defs>
             <marker id="arrowBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
               <path d="M0,0 L0,6 L6,3 z" fill="#4a9eff" />
@@ -484,10 +470,10 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                 key={p.id}
                 d={`M${p.x1},${p.y1} C${cx1},${p.y1} ${cx2},${p.y2} ${p.x2},${p.y2}`}
                 stroke={p.color}
-                strokeWidth={highlighted ? 2 : 1}
-                strokeOpacity={highlighted ? 0.85 : 0.15}
+                strokeWidth={highlighted ? 2 : 0.5}
+                strokeOpacity={highlighted ? 0.85 : 0.12}
                 fill="none"
-                markerEnd={`url(#${markerId})`}
+                markerEnd={highlighted ? `url(#${markerId})` : undefined}
               />
             );
           })}

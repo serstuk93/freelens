@@ -244,10 +244,16 @@
     background: var(--layoutTabsBackground, #24273a);
     min-height: 34px;
 
-    &:hover,
     &.is-hovered {
       border-color: var(--colorInfo, #4a9eff);
       background: var(--layoutBackground, #1e1e2e);
+    }
+
+    &.is-highlighted {
+      opacity: 1;
+      cursor: pointer;
+      border-color: var(--colorInfo, #4a9eff);
+      background: rgba(74, 158, 255, 0.08);
     }
 
     &.is-orphaned {
@@ -255,19 +261,21 @@
       opacity: 0.6;
     }
 
+    // orphaned + highlighted: keep visible but dashed
+    &.is-orphaned.is-highlighted {
+      opacity: 0.9;
+    }
+
     &.is-selected {
       border-color: #fff !important;
       box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
       cursor: pointer;
+      background: rgba(255, 255, 255, 0.06);
     }
 
     &.is-dimmed {
-      opacity: 0.2;
-    }
-
-    &.is-highlighted {
-      opacity: 1;
-      cursor: pointer;
+      opacity: 0.18;
+      pointer-events: none;
     }
 
     // SA node
