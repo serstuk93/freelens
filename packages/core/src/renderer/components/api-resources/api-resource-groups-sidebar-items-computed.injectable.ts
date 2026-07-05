@@ -9,7 +9,6 @@ import { computedAnd } from "@freelensapp/utilities";
 import { getInjectable } from "@ogre-tools/injectable";
 import { matches } from "lodash";
 import { computed } from "mobx";
-import React from "react";
 import apiResourcesRouteInjectable, { type ApiResourcesPathParameters } from "../../../common/front-end-routing/routes/cluster/api-resources/api-resources-route.injectable";
 import navigateToApiResourcesInjectable from "../../../common/front-end-routing/routes/cluster/api-resources/navigate-to-api-resources.injectable";
 import { shouldShowResourceInjectionToken } from "../../../features/cluster/showing-kube-resources/common/allowed-resources-injection-token";
@@ -17,7 +16,6 @@ import routeIsActiveInjectable from "../../routes/route-is-active.injectable";
 import routePathParametersInjectable from "../../routes/route-path-parameters.injectable";
 import apiResourcesSidebarItemInjectable from "./sidebar-item.injectable";
 import apiResourceGroupsInjectable from "./api-resource-groups.injectable";
-import { Icon } from "@freelensapp/icon";
 
 import type { SidebarItemRegistration } from "@freelensapp/cluster-sidebar";
 
