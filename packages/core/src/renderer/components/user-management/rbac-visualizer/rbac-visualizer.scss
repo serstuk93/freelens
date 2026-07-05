@@ -370,6 +370,40 @@
     text-transform: uppercase;
   }
 
+  .node-subject {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.03em;
+
+    &--serviceaccount {
+      background: rgba(26, 188, 156, 0.14);
+      color: #1abc9c;
+      border: 1px solid rgba(26, 188, 156, 0.4);
+    }
+
+    &--user {
+      background: rgba(155, 89, 182, 0.15);
+      color: #a66db8;
+      border: 1px solid rgba(155, 89, 182, 0.4);
+    }
+
+    &--group {
+      background: rgba(46, 204, 113, 0.14);
+      color: #2ecc71;
+      border: 1px solid rgba(46, 204, 113, 0.4);
+    }
+
+    &--other {
+      background: rgba(108, 112, 134, 0.18);
+      color: #9399b2;
+      border: 1px solid rgba(108, 112, 134, 0.35);
+    }
+  }
+
   .node-badge {
     font-size: 9px;
     font-weight: 800;

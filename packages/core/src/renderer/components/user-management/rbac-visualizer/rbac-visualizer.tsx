@@ -67,6 +67,24 @@ function crNodeId(name: string) {
   return `cr:${name}`;
 }
 
+function subjectKindLabel(kind: string) {
+  return kind === "ServiceAccount" ? "SA" : kind;
+}
+
+function subjectKindClass(kind: string) {
+  const k = kind.toLowerCase();
+  if (k === "serviceaccount" || k === "user" || k === "group") return k;
+  return "other";
+}
+
+function subjectCounts(subjects: { kind: string }[]) {
+  const counts = new Map<string, number>();
+  for (const s of subjects) {
+    counts.set(s.kind, (counts.get(s.kind) ?? 0) + 1);
+  }
+  return counts;
+}
+
 // ---- Component --------------------------------------------------------------
 
 const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
@@ -203,18 +221,9 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
     lowerSearch === "" || cr.getName().toLowerCase().includes(lowerSearch),
   );
 
-  // Bindings that have no ServiceAccount subjects (User/Group only or empty)
-  const connectedBindingIds = new Set<string>([
-    ...saToBindingEdges.map((e) => e.toId),
-  ]);
-
   function isOrphanedSa(nodeId: string) { return !connectedSaIds.has(nodeId); }
   /** Binding has zero subjects of any kind — truly useless. */
   function hasNoSubjects(subjects: { kind: string }[]) { return subjects.length === 0; }
-  /** Binding has subjects but none are ServiceAccounts (User/Group only — normal). */
-  function hasNoSaSubjects(nodeId: string, subjects: { kind: string }[]) {
-    return !connectedBindingIds.has(nodeId) && subjects.length > 0;
-  }
   function isOrphanedRole(nodeId: string) { return !connectedRoleIds.has(nodeId); }
 
   // ---- Hover chain computation ---------------------------------------------
@@ -403,8 +412,10 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
             <span className="legend-badge-label">ClusterRole whose rules are auto-populated by the control plane from other ClusterRoles matching its label selectors — not bound directly (e.g. cluster-admin, admin, edit, view)</span>
           </div>
           <div className="legend-badge-row">
-            <span className="legend-badge node-info">no SA</span>
-            <span className="legend-badge-label">Binding targets only Users or Groups, not ServiceAccounts — fully functional, just not visible as a graph connection here</span>
+            <span className="node-subject node-subject--serviceaccount">2 SA</span>
+            <span className="node-subject node-subject--user">1 User</span>
+            <span className="node-subject node-subject--group">3 Group</span>
+            <span className="legend-badge-label">Subject count chips on bindings — each chip shows the type and count of subjects (ServiceAccounts, Users, Groups, or other kinds)</span>
           </div>
           <div className="legend-badge-row">
             <span className="legend-badge node-orphaned">no subjects</span>
@@ -486,7 +497,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
               const nodeId = rbNodeId(rb.getNs() ?? "", rb.getName());
               const subjects = rb.getSubjects();
               const noSubjects = hasNoSubjects(subjects);
-              const noSa = hasNoSaSubjects(nodeId, subjects);
+              const counts = subjectCounts(subjects);
 
               return (
                 <div
@@ -501,7 +512,11 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                   <span className="node-name">{rb.getName()}</span>
                   {rb.getNs() && <span className="node-ns">{rb.getNs()}</span>}
                   {noSubjects && <span className="node-orphaned">no subjects</span>}
-                  {noSa && <span className="node-info">no SA</span>}
+                  {[...counts.entries()].map(([kind, count]) => (
+                    <span key={kind} className={`node-subject node-subject--${subjectKindClass(kind)}`}>
+                      {count} {subjectKindLabel(kind)}
+                    </span>
+                  ))}
                 </div>
               );
             })}
@@ -509,7 +524,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
               const nodeId = crbNodeId(crb.getName());
               const subjects = crb.getSubjects();
               const noSubjects = hasNoSubjects(subjects);
-              const noSa = hasNoSaSubjects(nodeId, subjects);
+              const counts = subjectCounts(subjects);
 
               return (
                 <div
@@ -523,7 +538,11 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                   <span className="node-badge node-badge--crb">CRB</span>
                   <span className="node-name">{crb.getName()}</span>
                   {noSubjects && <span className="node-orphaned">no subjects</span>}
-                  {noSa && <span className="node-info">no SA</span>}
+                  {[...counts.entries()].map(([kind, count]) => (
+                    <span key={kind} className={`node-subject node-subject--${subjectKindClass(kind)}`}>
+                      {count} {subjectKindLabel(kind)}
+                    </span>
+                  ))}
                 </div>
               );
             })}
