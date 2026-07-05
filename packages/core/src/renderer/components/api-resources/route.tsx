@@ -9,7 +9,7 @@ import "./api-resources.scss";
 import { KubeApi } from "@freelensapp/kube-api";
 import { maybeKubeApiInjectable } from "@freelensapp/kube-api-specifics";
 import { KubeObject } from "@freelensapp/kube-object";
-import { logErrorInjectionToken, logInfoInjectionToken, logWarningInjectionToken } from "@freelensapp/logger";
+import { logErrorInjectionToken, logInfoInjectionToken, logWarningInjectionToken, logDebugInjectionToken } from "@freelensapp/logger";
 import { withInjectables } from "@ogre-tools/injectable-react";
 import { observer } from "mobx-react";
 import React from "react";
@@ -169,6 +169,7 @@ export const ApiResourcesRoute = withInjectables<Dependencies>(NonInjectedApiRes
       const logError = di.inject(logErrorInjectionToken);
       const logInfo = di.inject(logInfoInjectionToken);
       const logWarn = di.inject(logWarningInjectionToken);
+      const logDebug = di.inject(logDebugInjectionToken);
       const maybeKubeApi = di.inject(maybeKubeApiInjectable);
 
       return (resource) => {
@@ -185,6 +186,7 @@ export const ApiResourcesRoute = withInjectables<Dependencies>(NonInjectedApiRes
             logError,
             logInfo,
             logWarn,
+            logDebug,
             maybeKubeApi,
           },
           { objectConstructor },
