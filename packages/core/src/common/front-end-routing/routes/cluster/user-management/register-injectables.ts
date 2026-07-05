@@ -9,6 +9,7 @@
 import { registerInjectables as registerClusterRoleBindingsInjectables } from "./cluster-role-bindings/register-injectables";
 import { registerInjectables as registerClusterRolesInjectables } from "./cluster-roles/register-injectables";
 import { registerInjectables as registerPodSecurityPoliciesInjectables } from "./pod-security-policies/register-injectables";
+import { registerInjectables as registerRbacVisualizerInjectables } from "./rbac-visualizer/register-injectables";
 import { registerInjectables as registerRoleBindingsInjectables } from "./role-bindings/register-injectables";
 import { registerInjectables as registerRolesInjectables } from "./roles/register-injectables";
 import { registerInjectables as registerServiceAccountsInjectables } from "./service-accounts/register-injectables";
@@ -28,6 +29,11 @@ export function registerInjectables(di: DiContainerForInjection): void {
   }
   try {
     registerPodSecurityPoliciesInjectables(di);
+  } catch (e) {
+    /* Ignore duplicate registration */
+  }
+  try {
+    registerRbacVisualizerInjectables(di);
   } catch (e) {
     /* Ignore duplicate registration */
   }
