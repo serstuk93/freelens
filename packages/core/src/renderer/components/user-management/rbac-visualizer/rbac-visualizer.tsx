@@ -391,6 +391,20 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   const visibleRoles = filteredRoles;
   const visibleCRs = filteredCRs;
 
+  // Connected counts shown in column headers only when a chain is active
+  const activeSubjectCount = activeConnected
+    ? filteredSAs.filter((sa) => activeConnected.has(saNodeId(sa.getNs() ?? "", sa.getName()))).length
+      + filteredNonSaSubjects.filter((s) => activeConnected.has(s.id)).length
+    : null;
+  const activeBindingCount = activeConnected
+    ? filteredRBs.filter((rb) => activeConnected.has(rbNodeId(rb.getNs() ?? "", rb.getName()))).length
+      + filteredCRBs.filter((crb) => activeConnected.has(crbNodeId(crb.getName()))).length
+    : null;
+  const activeRoleCount = activeConnected
+    ? filteredRoles.filter((r) => activeConnected.has(roleNodeId(r.getNs() ?? "", r.getName()))).length
+      + filteredCRs.filter((cr) => activeConnected.has(crNodeId(cr.getName()))).length
+    : null;
+
   const svgHeight = containerRef.current?.scrollHeight ?? 600;
 
   // ---- JSX -----------------------------------------------------------------
@@ -487,7 +501,9 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
         <div className="rbac-visualizer-columns">
           {/* Column 1: Subjects */}
           <div className="rbac-visualizer-column">
-            <div className="column-header">Subjects</div>
+            <div className="column-header">
+              Subjects{activeSubjectCount !== null ? ` (${activeSubjectCount})` : ""}
+            </div>
             {visibleSAs.length === 0 && visibleNonSaSubjects.length === 0 ? (
               <div className="column-empty">No subjects</div>
             ) : (
@@ -533,7 +549,9 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
           {/* Column 2: Bindings */}
           <div className="rbac-visualizer-column">
-            <div className="column-header">Bindings</div>
+            <div className="column-header">
+              Bindings{activeBindingCount !== null ? ` (${activeBindingCount})` : ""}
+            </div>
             {visibleRBs.map((rb) => {
               const nodeId = rbNodeId(rb.getNs() ?? "", rb.getName());
               const subjects = rb.getSubjects();
@@ -594,7 +612,9 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
           {/* Column 3: Roles / ClusterRoles */}
           <div className="rbac-visualizer-column">
-            <div className="column-header">Roles &amp; ClusterRoles</div>
+            <div className="column-header">
+              Roles &amp; ClusterRoles{activeRoleCount !== null ? ` (${activeRoleCount})` : ""}
+            </div>
             {visibleRoles.map((r) => {
               const nodeId = roleNodeId(r.getNs() ?? "", r.getName());
               const orphaned = isOrphanedRole(nodeId);
