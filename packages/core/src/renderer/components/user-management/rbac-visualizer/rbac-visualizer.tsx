@@ -67,6 +67,10 @@ function crNodeId(name: string) {
   return `cr:${name}`;
 }
 
+function nonSaNodeId(kind: string, name: string) {
+  return `${kind.toLowerCase()}:${name}`;
+}
+
 function subjectKindLabel(kind: string) {
   return kind === "ServiceAccount" ? "SA" : kind;
 }
@@ -129,6 +133,9 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
   // SA → Binding edges (left column → middle column)
   const saToBindingEdges: Array<{ id: string; fromId: string; toId: string; color: string }> = [];
+  // Non-SA subject (User/Group/…) → Binding edges
+  const nonSaSubjectNodes = new Map<string, { kind: string; name: string }>();
+  const nonSaToBindingEdges: Array<{ id: string; fromId: string; toId: string; color: string }> = [];
   // Binding → Role edges (middle column → right column)
   const bindingToRoleEdges: Array<{ id: string; fromId: string; toId: string; color: string }> = [];
 
@@ -153,20 +160,28 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
       color: "#4a9eff",
     });
 
-    // Subject SA → Binding
+    // Subject → Binding edges
     for (const subject of rb.getSubjects()) {
-      if (subject.kind !== "ServiceAccount") continue;
-
-      const ns = subject.namespace ?? rb.getNs() ?? "";
-      const sid = saNodeId(ns, subject.name);
-
-      connectedSaIds.add(sid);
-      saToBindingEdges.push({
-        id: `${sid}→${bindingId}`,
-        fromId: sid,
-        toId: bindingId,
-        color: "#4a9eff",
-      });
+      if (subject.kind === "ServiceAccount") {
+        const ns = subject.namespace ?? rb.getNs() ?? "";
+        const sid = saNodeId(ns, subject.name);
+        connectedSaIds.add(sid);
+        saToBindingEdges.push({
+          id: `${sid}\u2192${bindingId}`,
+          fromId: sid,
+          toId: bindingId,
+          color: "#4a9eff",
+        });
+      } else {
+        const nid = nonSaNodeId(subject.kind, subject.name);
+        nonSaSubjectNodes.set(nid, { kind: subject.kind, name: subject.name });
+        nonSaToBindingEdges.push({
+          id: `${nid}\u2192${bindingId}`,
+          fromId: nid,
+          toId: bindingId,
+          color: "#4a9eff",
+        });
+      }
     }
   }
 
@@ -183,18 +198,26 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
     });
 
     for (const subject of crb.getSubjects()) {
-      if (subject.kind !== "ServiceAccount") continue;
-
-      const ns = subject.namespace ?? "";
-      const sid = saNodeId(ns, subject.name);
-
-      connectedSaIds.add(sid);
-      saToBindingEdges.push({
-        id: `${sid}→${bindingId}`,
-        fromId: sid,
-        toId: bindingId,
-        color: "#9b59b6",
-      });
+      if (subject.kind === "ServiceAccount") {
+        const ns = subject.namespace ?? "";
+        const sid = saNodeId(ns, subject.name);
+        connectedSaIds.add(sid);
+        saToBindingEdges.push({
+          id: `${sid}\u2192${bindingId}`,
+          fromId: sid,
+          toId: bindingId,
+          color: "#9b59b6",
+        });
+      } else {
+        const nid = nonSaNodeId(subject.kind, subject.name);
+        nonSaSubjectNodes.set(nid, { kind: subject.kind, name: subject.name });
+        nonSaToBindingEdges.push({
+          id: `${nid}\u2192${bindingId}`,
+          fromId: nid,
+          toId: bindingId,
+          color: "#9b59b6",
+        });
+      }
     }
   }
 
@@ -226,12 +249,21 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   function hasNoSubjects(subjects: { kind: string }[]) { return subjects.length === 0; }
   function isOrphanedRole(nodeId: string) { return !connectedRoleIds.has(nodeId); }
 
+  // Non-SA subjects derived from bindings, sorted by kind then name
+  const allNonSaSubjects = [...nonSaSubjectNodes.entries()]
+    .map(([id, node]) => ({ id, ...node }))
+    .sort((a, b) => a.kind.localeCompare(b.kind) || a.name.localeCompare(b.name));
+
+  const filteredNonSaSubjects = allNonSaSubjects.filter(
+    (s) => lowerSearch === "" || s.name.toLowerCase().includes(lowerSearch) || s.kind.toLowerCase().includes(lowerSearch),
+  );
+
   // ---- Hover chain computation ---------------------------------------------
 
   function getConnectedSet(nodeId: string): Set<string> {
     const connected = new Set<string>([nodeId]);
 
-    const allEdges = [...saToBindingEdges, ...bindingToRoleEdges];
+    const allEdges = [...saToBindingEdges, ...nonSaToBindingEdges, ...bindingToRoleEdges];
 
     // Walk outward (from → to)
     let changed = true;
@@ -277,7 +309,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
     const container = containerRef.current;
     const graphRect = graphRef.current.getBoundingClientRect();
 
-    const allEdges = [...saToBindingEdges, ...bindingToRoleEdges];
+    const allEdges = [...saToBindingEdges, ...nonSaToBindingEdges, ...bindingToRoleEdges];
     const newPaths: SvgPath[] = [];
 
     for (const edge of allEdges) {
@@ -359,6 +391,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
   // When something is selected, only show connected nodes in each column.
   const visibleSAs = selectedId ? filteredSAs.filter((sa) => activeConnected?.has(saNodeId(sa.getNs() ?? "", sa.getName()))) : filteredSAs;
+  const visibleNonSaSubjects = selectedId ? filteredNonSaSubjects.filter((s) => activeConnected?.has(s.id)) : filteredNonSaSubjects;
   const visibleRBs = selectedId ? filteredRBs.filter((rb) => activeConnected?.has(rbNodeId(rb.getNs() ?? "", rb.getName()))) : filteredRBs;
   const visibleCRBs = selectedId ? filteredCRBs.filter((crb) => activeConnected?.has(crbNodeId(crb.getName()))) : filteredCRBs;
   const visibleRoles = selectedId ? filteredRoles.filter((r) => activeConnected?.has(roleNodeId(r.getNs() ?? "", r.getName()))) : filteredRoles;
@@ -462,31 +495,49 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
         {/* Three columns */}
         <div className="rbac-visualizer-columns">
-          {/* Column 1: Service Accounts */}
+          {/* Column 1: Subjects */}
           <div className="rbac-visualizer-column">
-            <div className="column-header">Service Accounts</div>
-            {visibleSAs.length === 0 ? (
-              <div className="column-empty">No service accounts</div>
+            <div className="column-header">Subjects</div>
+            {visibleSAs.length === 0 && visibleNonSaSubjects.length === 0 ? (
+              <div className="column-empty">No subjects</div>
             ) : (
-              visibleSAs.map((sa) => {
-                const nodeId = saNodeId(sa.getNs() ?? "", sa.getName());
-                const unbound = isOrphanedSa(nodeId);
+              <>
+                {visibleSAs.map((sa) => {
+                  const nodeId = saNodeId(sa.getNs() ?? "", sa.getName());
+                  const unbound = isOrphanedSa(nodeId);
 
-                return (
+                  return (
+                    <div
+                      key={nodeId}
+                      data-node-id={nodeId}
+                      className={nodeClass(nodeId, "rbac-node rbac-node--sa")}
+                      onMouseEnter={() => setHoveredId(nodeId)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
+                    >
+                      <span className="node-name">{sa.getName()}</span>
+                      {sa.getNs() && <span className="node-ns">{sa.getNs()}</span>}
+                      <span className="node-subject node-subject--serviceaccount">SA</span>
+                      {unbound && <span className="node-unbound">unbound</span>}
+                    </div>
+                  );
+                })}
+                {visibleNonSaSubjects.map((subject) => (
                   <div
-                    key={nodeId}
-                    data-node-id={nodeId}
-                    className={nodeClass(nodeId, "rbac-node rbac-node--sa")}
-                    onMouseEnter={() => setHoveredId(nodeId)}
+                    key={subject.id}
+                    data-node-id={subject.id}
+                    className={nodeClass(subject.id, `rbac-node rbac-node--${subjectKindClass(subject.kind)}`)}
+                    onMouseEnter={() => setHoveredId(subject.id)}
                     onMouseLeave={() => setHoveredId(null)}
-                    onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
+                    onClick={(e) => { e.stopPropagation(); handleNodeClick(subject.id); }}
                   >
-                    <span className="node-name">{sa.getName()}</span>
-                    {sa.getNs() && <span className="node-ns">{sa.getNs()}</span>}
-                    {unbound && <span className="node-unbound">unbound</span>}
+                    <span className="node-name">{subject.name}</span>
+                    <span className={`node-subject node-subject--${subjectKindClass(subject.kind)}`}>
+                      {subjectKindLabel(subject.kind)}
+                    </span>
                   </div>
-                );
-              })
+                ))}
+              </>
             )}
           </div>
 
