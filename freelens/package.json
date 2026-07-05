@@ -1,8 +1,7 @@
 {
   "name": "kubeide",
-  "version": "1.10.3-0",
+  "version": "1.10.3-rs",
   "private": true,
-  "version": "1.9.1-0",
   "productName": "KubeIDE",
   "description": "KubeIDE - Free IDE for Kubernetes",
   "keywords": [],
@@ -199,5 +198,5 @@
   "engines": {
     "node": "^24.0.0"
   },
-  "copyright": "© 2024-2026 Freelens Authors"
+  "copyright": "© 2024-2026 KubeIDE Authors"
 }
