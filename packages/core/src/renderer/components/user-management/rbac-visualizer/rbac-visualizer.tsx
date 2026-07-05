@@ -236,7 +236,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   }
 
   function handleNodeClick(nodeId: string) {
-    setSelectedId((prev) => (prev === nodeId ? null : nodeId));
+    setSelectedId(nodeId);
   }
 
   // ---- SVG path computation ------------------------------------------------
@@ -335,7 +335,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   // ---- JSX -----------------------------------------------------------------
 
   return (
-    <div className="RbacVisualizer" ref={containerRef} onClick={() => setSelectedId(null)}>
+    <div className="RbacVisualizer" ref={containerRef} onContextMenu={(e) => { e.preventDefault(); setSelectedId(null); }}>
       {/* Toolbar */}
       <div className="rbac-visualizer-toolbar">
         <h2 className="rbac-visualizer-title">RBAC Visualizer</h2>
