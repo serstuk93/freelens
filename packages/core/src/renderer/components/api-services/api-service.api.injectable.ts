@@ -6,7 +6,7 @@
 
 import { ApiServiceApi } from "./store";
 import { kubeApiInjectionToken, maybeKubeApiInjectable, storesAndApisCanBeCreatedInjectionToken } from "@freelensapp/kube-api-specifics";
-import { logErrorInjectionToken, logInfoInjectionToken, logWarningInjectionToken } from "@freelensapp/logger";
+import { logErrorInjectionToken, logDebugInjectionToken, logInfoInjectionToken, logWarningInjectionToken } from "@freelensapp/logger";
 import { getInjectable } from "@ogre-tools/injectable";
 import assert from "assert";
 
@@ -23,6 +23,7 @@ const apiServiceApiInjectable = getInjectable({
       logError: di.inject(logErrorInjectionToken),
       logInfo: di.inject(logInfoInjectionToken),
       logWarn: di.inject(logWarningInjectionToken),
+      logDebug: di.inject(logDebugInjectionToken),
       maybeKubeApi: di.inject(maybeKubeApiInjectable),
     });
   },
