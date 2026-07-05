@@ -296,6 +296,10 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   }
 
   // ---- SVG path computation ------------------------------------------------
+  // edgesRef is updated every render so computeSvgPaths always reads fresh arrays
+  // even though it is memoised with [] deps.
+  const edgesRef = useRef({ sa: saToBindingEdges, nonSa: nonSaToBindingEdges, role: bindingToRoleEdges });
+  edgesRef.current = { sa: saToBindingEdges, nonSa: nonSaToBindingEdges, role: bindingToRoleEdges };
 
   const computeSvgPaths = useCallback(() => {
     if (!containerRef.current || !graphRef.current) return;
@@ -303,7 +307,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
     const container = containerRef.current;
     const graphRect = graphRef.current.getBoundingClientRect();
 
-    const allEdges = [...saToBindingEdges, ...nonSaToBindingEdges, ...bindingToRoleEdges];
+    const allEdges = [...edgesRef.current.sa, ...edgesRef.current.nonSa, ...edgesRef.current.role];
     const newPaths: SvgPath[] = [];
 
     for (const edge of allEdges) {
