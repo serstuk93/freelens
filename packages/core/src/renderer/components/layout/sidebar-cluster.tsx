@@ -63,7 +63,7 @@ const NonInjectedSidebarCluster = observer(
         if (!clusterEntity) return;
         try {
           const configMap = await configMapApi.get({
-            name: "cluster-type",
+            name: "k3s-config",
             namespace: "kube-system",
           });
           const isProductive = configMap?.data?.isProductive === "true";
