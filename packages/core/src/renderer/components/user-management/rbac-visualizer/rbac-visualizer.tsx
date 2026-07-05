@@ -312,10 +312,6 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   function nodeClass(nodeId: string, baseClass: string) {
     const classes = [baseClass];
 
-    if (activeConnected) {
-      classes.push(activeConnected.has(nodeId) ? "is-highlighted" : "is-dimmed");
-    }
-
     if (nodeId === activeId) {
       classes.push("is-hovered");
     }
@@ -326,6 +322,13 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
     return classes.join(" ");
   }
+
+  // When something is selected, only show connected nodes in each column.
+  const visibleSAs = selectedId ? filteredSAs.filter((sa) => activeConnected?.has(saNodeId(sa.getNs() ?? "", sa.getName()))) : filteredSAs;
+  const visibleRBs = selectedId ? filteredRBs.filter((rb) => activeConnected?.has(rbNodeId(rb.getNs() ?? "", rb.getName()))) : filteredRBs;
+  const visibleCRBs = selectedId ? filteredCRBs.filter((crb) => activeConnected?.has(crbNodeId(crb.getName()))) : filteredCRBs;
+  const visibleRoles = selectedId ? filteredRoles.filter((r) => activeConnected?.has(roleNodeId(r.getNs() ?? "", r.getName()))) : filteredRoles;
+  const visibleCRs = selectedId ? filteredCRs.filter((cr) => activeConnected?.has(crNodeId(cr.getName()))) : filteredCRs;
 
   const svgHeight = containerRef.current?.scrollHeight ?? 600;
 
@@ -390,10 +393,10 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           {/* Column 1: Service Accounts */}
           <div className="rbac-visualizer-column">
             <div className="column-header">Service Accounts</div>
-            {filteredSAs.length === 0 ? (
+            {visibleSAs.length === 0 ? (
               <div className="column-empty">No bound service accounts</div>
             ) : (
-              filteredSAs.map((sa) => {
+              visibleSAs.map((sa) => {
                 const nodeId = saNodeId(sa.getNs() ?? "", sa.getName());
 
                 return (
@@ -416,7 +419,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           {/* Column 2: Bindings */}
           <div className="rbac-visualizer-column">
             <div className="column-header">Bindings</div>
-            {filteredRBs.map((rb) => {
+            {visibleRBs.map((rb) => {
               const nodeId = rbNodeId(rb.getNs() ?? "", rb.getName());
 
               return (
@@ -434,7 +437,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                 </div>
               );
             })}
-            {filteredCRBs.map((crb) => {
+            {visibleCRBs.map((crb) => {
               const nodeId = crbNodeId(crb.getName());
 
               return (
@@ -451,7 +454,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                 </div>
               );
             })}
-            {filteredRBs.length === 0 && filteredCRBs.length === 0 && (
+            {visibleRBs.length === 0 && visibleCRBs.length === 0 && (
               <div className="column-empty">No bindings</div>
             )}
           </div>
@@ -459,7 +462,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           {/* Column 3: Roles / ClusterRoles */}
           <div className="rbac-visualizer-column">
             <div className="column-header">Roles &amp; ClusterRoles</div>
-            {filteredRoles.map((r) => {
+            {visibleRoles.map((r) => {
               const nodeId = roleNodeId(r.getNs() ?? "", r.getName());
 
               return (
@@ -477,7 +480,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                 </div>
               );
             })}
-            {filteredCRs.map((cr) => {
+            {visibleCRs.map((cr) => {
               const nodeId = crNodeId(cr.getName());
 
               return (
@@ -494,7 +497,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                 </div>
               );
             })}
-            {filteredRoles.length === 0 && filteredCRs.length === 0 && (
+            {visibleRoles.length === 0 && visibleCRs.length === 0 && (
               <div className="column-empty">No bound roles</div>
             )}
           </div>
