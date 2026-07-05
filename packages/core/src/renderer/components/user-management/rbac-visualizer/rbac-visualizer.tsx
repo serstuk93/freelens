@@ -14,12 +14,14 @@ import clusterRoleStoreInjectable from "../cluster-roles/store.injectable";
 import roleBindingStoreInjectable from "../role-bindings/store.injectable";
 import roleStoreInjectable from "../roles/store.injectable";
 import serviceAccountStoreInjectable from "../service-accounts/store.injectable";
+import subscribeStoresInjectable from "../../../kube-watch-api/subscribe-stores.injectable";
 
 import type { ClusterRoleBindingStore } from "../cluster-role-bindings/store";
 import type { ClusterRoleStore } from "../cluster-roles/store";
 import type { RoleBindingStore } from "../role-bindings/store";
 import type { RoleStore } from "../roles/store";
 import type { ServiceAccountStore } from "../service-accounts/store";
+import type { SubscribeStores } from "../../../kube-watch-api/kube-watch-api";
 
 // ---- Types ------------------------------------------------------------------
 
@@ -35,6 +37,7 @@ interface SvgPath {
 }
 
 interface Dependencies {
+  subscribeToStores: SubscribeStores;
   serviceAccountStore: ServiceAccountStore;
   roleBindingStore: RoleBindingStore;
   clusterRoleBindingStore: ClusterRoleBindingStore;
@@ -67,7 +70,7 @@ function crNodeId(name: string) {
 // ---- Component --------------------------------------------------------------
 
 const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
-  const { serviceAccountStore, roleBindingStore, clusterRoleBindingStore, roleStore, clusterRoleStore } = props;
+  const { serviceAccountStore, roleBindingStore, clusterRoleBindingStore, roleStore, clusterRoleStore, subscribeToStores } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const graphRef = useRef<HTMLDivElement>(null);
@@ -76,6 +79,20 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
+
+  // Use the same subscription mechanism as KubeObjectListLayout so stores
+  // load correctly regardless of which page was visited first.
+  useEffect(() => {
+    const disposer = subscribeToStores([
+      serviceAccountStore,
+      roleBindingStore,
+      clusterRoleBindingStore,
+      roleStore,
+      clusterRoleStore,
+    ]);
+
+    return disposer;
+  }, [subscribeToStores, serviceAccountStore, roleBindingStore, clusterRoleBindingStore, roleStore, clusterRoleStore]);
 
   // ---- Build graph data from stores ----------------------------------------
 
@@ -509,6 +526,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
 export const RbacVisualizer = withInjectables<Dependencies>(NonInjectedRbacVisualizer, {
   getProps: (di) => ({
+    subscribeToStores: di.inject(subscribeStoresInjectable),
     serviceAccountStore: di.inject(serviceAccountStoreInjectable),
     roleBindingStore: di.inject(roleBindingStoreInjectable),
     clusterRoleBindingStore: di.inject(clusterRoleBindingStoreInjectable),
