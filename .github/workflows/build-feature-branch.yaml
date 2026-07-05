@@ -52,8 +52,6 @@ jobs:
             concurrency: windows-x64
 
     runs-on: ${{ matrix.runs-on }}
-    environment: signing
-
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.concurrency }}
       cancel-in-progress: true
@@ -234,50 +232,6 @@ jobs:
         env:
           DEBUG: electron-builder,electron-builder:*
 
-      - name: List unpacked binaries to sign (Windows)
-        id: sign-list
-        if: runner.os == 'Windows'
-        shell: bash
-        run: |
-          set -euo pipefail
-          case "${{ matrix.arch }}" in
-            arm64) unpacked="win-arm64-unpacked" ;;
-            *) unpacked="win-unpacked" ;;
-          esac
-          ws='${{ github.workspace }}'
-          dir="freelens/dist/$unpacked"
-          list="$RUNNER_TEMP/sign-files.txt"
-          : > "$list"
-          while IFS= read -r -d '' f; do
-            if file -b "$f" | grep -q 'PE32'; then
-              rel="${f#./}"
-              printf '%s\\%s\n' "$ws" "${rel//\//\\}" >> "$list"
-            fi
-          done < <(find "$dir" -type f \( -iname '*.dll' -o -iname '*.exe' -o -iname '*.node' \) -print0)
-          if [[ ! -s "$list" ]]; then
-            echo "No Windows PE binaries found under ${dir} to sign" >&2
-            exit 1
-          fi
-          echo "Files to sign:"
-          cat "$list"
-          {
-            echo "files<<SIGN_EOF"
-            cat "$list"
-            echo "SIGN_EOF"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Azure Trusted Signing unpacked binaries (Windows)
-        if: runner.os == 'Windows'
-        uses: azure/artifact-signing-action@v2
-        with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          endpoint: ${{ vars.AZURE_ENDPOINT }}
-          trusted-signing-account-name: ${{ vars.AZURE_CODE_SIGNING_NAME }}
-          certificate-profile-name: ${{ vars.AZURE_CERT_PROFILE_NAME }}
-          files: ${{ steps.sign-list.outputs.files }}
-
       - name: Build Electron app installers (Windows)
         if: runner.os == 'Windows'
         shell: bash
@@ -292,19 +246,6 @@ jobs:
             --${{ matrix.arch }}
         env:
           DEBUG: electron-builder,electron-builder:*
-
-      - name: Azure Trusted Signing (Windows)
-        if: runner.os == 'Windows'
-        uses: azure/artifact-signing-action@v2
-        with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          endpoint: ${{ vars.AZURE_ENDPOINT }}
-          trusted-signing-account-name: ${{ vars.AZURE_CODE_SIGNING_NAME }}
-          certificate-profile-name: ${{ vars.AZURE_CERT_PROFILE_NAME }}
-          files-folder: ${{ github.workspace }}\freelens\dist
-          files-folder-filter: exe,msi
 
       - name: Tweak binaries
         shell: bash
@@ -321,11 +262,12 @@ jobs:
           my $arch = $arch{$ENV{ARCH}};
           my $branch = $ENV{BRANCH};
           $branch =~ s/[^a-zA-Z0-9._-]/-/g;
-          while (<Freelens*>) {
+          while (<*>) {
+            next unless /\.(dmg|exe|msi|pkg|AppImage|deb|rpm)$/;
             my $src = $_;
             s/[ _]/-/g;
             # Insert branch name before architecture
-            s/(Freelens-[^-]+)(-.*\.(dmg|exe|msi|pkg|AppImage|deb|rpm))$/$1-$branch$2/;
+            s/^(.+?-[0-9][^-]*)(-.*\.(dmg|exe|msi|pkg|AppImage|deb|rpm))$/$1-$branch$2/;
             if (/\.(dmg|exe|msi|pkg)$/ && !/-(amd64|arm64)\./) {
               s/\.(dmg|exe|msi|pkg)$/-$arch.$1/;
             }
@@ -348,9 +290,21 @@ jobs:
           ARCH: ${{ matrix.arch }}
           BRANCH: ${{ github.ref_name }}
 
+      - name: List files before upload
+        shell: bash
+        run: find freelens/dist -maxdepth 1 -type f -print
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: freelens-${{ matrix.os }}-${{ matrix.arch }}
-          path: freelens/dist/KubeIDE*.*
-          retention-days: 7
+          name: app-${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            freelens/dist/*.AppImage
+            freelens/dist/*.deb
+            freelens/dist/*.rpm
+            freelens/dist/*.dmg
+            freelens/dist/*.pkg
+            freelens/dist/*.exe
+            freelens/dist/*.msi
+          if-no-files-found: error
+          retention-days: 14
