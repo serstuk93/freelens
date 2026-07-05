@@ -79,6 +79,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
+  const [legendVisible, setLegendVisible] = useState(false);
 
   // Use the same subscription mechanism as KubeObjectListLayout so stores
   // load correctly regardless of which page was visited first.
@@ -180,38 +181,41 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   }
 
   // ---- Filtered node lists -------------------------------------------------
+  // All objects are shown; orphaned = not referenced by any binding.
 
-  const filteredSAs = serviceAccounts.filter((sa) => {
-    const id = saNodeId(sa.getNs() ?? "", sa.getName());
+  const filteredSAs = serviceAccounts.filter((sa) =>
+    lowerSearch === "" || sa.getName().toLowerCase().includes(lowerSearch),
+  );
 
-    if (!connectedSaIds.has(id)) return false;
+  const filteredRBs = roleBindings.filter((rb) =>
+    lowerSearch === "" || rb.getName().toLowerCase().includes(lowerSearch),
+  );
 
-    return lowerSearch === "" || sa.getName().toLowerCase().includes(lowerSearch);
-  });
+  const filteredCRBs = clusterRoleBindings.filter((crb) =>
+    lowerSearch === "" || crb.getName().toLowerCase().includes(lowerSearch),
+  );
 
-  const filteredRBs = roleBindings.filter((rb) => {
-    return lowerSearch === "" || rb.getName().toLowerCase().includes(lowerSearch);
-  });
+  const filteredRoles = roles.filter((r) =>
+    lowerSearch === "" || r.getName().toLowerCase().includes(lowerSearch),
+  );
 
-  const filteredCRBs = clusterRoleBindings.filter((crb) => {
-    return lowerSearch === "" || crb.getName().toLowerCase().includes(lowerSearch);
-  });
+  const filteredCRs = clusterRoles.filter((cr) =>
+    lowerSearch === "" || cr.getName().toLowerCase().includes(lowerSearch),
+  );
 
-  const filteredRoles = roles.filter((r) => {
-    const id = roleNodeId(r.getNs() ?? "", r.getName());
+  // Bindings that have no ServiceAccount subjects (User/Group only or empty)
+  const connectedBindingIds = new Set<string>([
+    ...saToBindingEdges.map((e) => e.toId),
+  ]);
 
-    if (!connectedRoleIds.has(id)) return false;
-
-    return lowerSearch === "" || r.getName().toLowerCase().includes(lowerSearch);
-  });
-
-  const filteredCRs = clusterRoles.filter((cr) => {
-    const id = crNodeId(cr.getName());
-
-    if (!connectedRoleIds.has(id)) return false;
-
-    return lowerSearch === "" || cr.getName().toLowerCase().includes(lowerSearch);
-  });
+  function isOrphanedSa(nodeId: string) { return !connectedSaIds.has(nodeId); }
+  /** Binding has zero subjects of any kind — truly useless. */
+  function hasNoSubjects(subjects: { kind: string }[]) { return subjects.length === 0; }
+  /** Binding has subjects but none are ServiceAccounts (User/Group only — normal). */
+  function hasNoSaSubjects(nodeId: string, subjects: { kind: string }[]) {
+    return !connectedBindingIds.has(nodeId) && subjects.length > 0;
+  }
+  function isOrphanedRole(nodeId: string) { return !connectedRoleIds.has(nodeId); }
 
   // ---- Hover chain computation ---------------------------------------------
 
@@ -326,8 +330,12 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
 
   // ---- Render helpers ------------------------------------------------------
 
-  function nodeClass(nodeId: string, baseClass: string) {
+  function nodeClass(nodeId: string, baseClass: string, orphaned = false) {
     const classes = [baseClass];
+
+    if (orphaned) {
+      classes.push("is-orphaned");
+    }
 
     if (nodeId === activeId) {
       classes.push("is-hovered");
@@ -363,14 +371,43 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <div className="rbac-visualizer-legend">
-          <span className="legend-item legend-sa">Service Account</span>
-          <span className="legend-item legend-rb">RoleBinding</span>
-          <span className="legend-item legend-crb">ClusterRoleBinding</span>
-          <span className="legend-item legend-role">Role</span>
-          <span className="legend-item legend-cr">ClusterRole</span>
-        </div>
+        <button
+          className={`rbac-legend-toggle${legendVisible ? " is-active" : ""}`}
+          onClick={() => setLegendVisible((v) => !v)}
+          type="button"
+        >
+          {legendVisible ? "Hide legend" : "Show legend"}
+        </button>
       </div>
+      {legendVisible && (
+        <div className="rbac-visualizer-legend">
+          <div className="legend-section-title">Resource types</div>
+          <div className="legend-row">
+            <span className="legend-item legend-sa">Service Account</span>
+            <span className="legend-item legend-rb">RoleBinding</span>
+            <span className="legend-item legend-crb">ClusterRoleBinding</span>
+            <span className="legend-item legend-role">Role</span>
+            <span className="legend-item legend-cr">ClusterRole</span>
+          </div>
+          <div className="legend-section-title">Badges</div>
+          <div className="legend-badge-row">
+            <span className="legend-badge node-orphaned">orphaned</span>
+            <span className="legend-badge-label">Resource not referenced by any binding — grants access to nobody and can be safely removed</span>
+          </div>
+          <div className="legend-badge-row">
+            <span className="legend-badge node-aggregated">aggregated</span>
+            <span className="legend-badge-label">ClusterRole whose rules are auto-populated by the control plane from other ClusterRoles matching its label selectors — not bound directly (e.g. cluster-admin, admin, edit, view)</span>
+          </div>
+          <div className="legend-badge-row">
+            <span className="legend-badge node-info">no SA</span>
+            <span className="legend-badge-label">Binding targets only Users or Groups, not ServiceAccounts — fully functional, just not visible as a graph connection here</span>
+          </div>
+          <div className="legend-badge-row">
+            <span className="legend-badge node-orphaned">no subjects</span>
+            <span className="legend-badge-label">Binding has zero subjects of any kind — grants permissions to nobody and is effectively dead configuration</span>
+          </div>
+        </div>
+      )}
 
       {/* Graph area */}
       <div className="rbac-visualizer-graph" ref={graphRef}>
@@ -414,22 +451,24 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           <div className="rbac-visualizer-column">
             <div className="column-header">Service Accounts</div>
             {visibleSAs.length === 0 ? (
-              <div className="column-empty">No bound service accounts</div>
+              <div className="column-empty">No service accounts</div>
             ) : (
               visibleSAs.map((sa) => {
                 const nodeId = saNodeId(sa.getNs() ?? "", sa.getName());
+                const orphaned = isOrphanedSa(nodeId);
 
                 return (
                   <div
                     key={nodeId}
                     data-node-id={nodeId}
-                    className={nodeClass(nodeId, "rbac-node rbac-node--sa")}
+                    className={nodeClass(nodeId, "rbac-node rbac-node--sa", orphaned)}
                     onMouseEnter={() => setHoveredId(nodeId)}
                     onMouseLeave={() => setHoveredId(null)}
                     onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
                   >
                     <span className="node-name">{sa.getName()}</span>
                     {sa.getNs() && <span className="node-ns">{sa.getNs()}</span>}
+                    {orphaned && <span className="node-orphaned">orphaned</span>}
                   </div>
                 );
               })
@@ -441,12 +480,15 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
             <div className="column-header">Bindings</div>
             {visibleRBs.map((rb) => {
               const nodeId = rbNodeId(rb.getNs() ?? "", rb.getName());
+              const subjects = rb.getSubjects();
+              const noSubjects = hasNoSubjects(subjects);
+              const noSa = hasNoSaSubjects(nodeId, subjects);
 
               return (
                 <div
                   key={nodeId}
                   data-node-id={nodeId}
-                  className={nodeClass(nodeId, "rbac-node rbac-node--rb")}
+                  className={nodeClass(nodeId, "rbac-node rbac-node--rb", noSubjects)}
                   onMouseEnter={() => setHoveredId(nodeId)}
                   onMouseLeave={() => setHoveredId(null)}
                   onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
@@ -454,23 +496,30 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                   <span className="node-badge node-badge--rb">RB</span>
                   <span className="node-name">{rb.getName()}</span>
                   {rb.getNs() && <span className="node-ns">{rb.getNs()}</span>}
+                  {noSubjects && <span className="node-orphaned">no subjects</span>}
+                  {noSa && <span className="node-info">no SA</span>}
                 </div>
               );
             })}
             {visibleCRBs.map((crb) => {
               const nodeId = crbNodeId(crb.getName());
+              const subjects = crb.getSubjects();
+              const noSubjects = hasNoSubjects(subjects);
+              const noSa = hasNoSaSubjects(nodeId, subjects);
 
               return (
                 <div
                   key={nodeId}
                   data-node-id={nodeId}
-                  className={nodeClass(nodeId, "rbac-node rbac-node--crb")}
+                  className={nodeClass(nodeId, "rbac-node rbac-node--crb", noSubjects)}
                   onMouseEnter={() => setHoveredId(nodeId)}
                   onMouseLeave={() => setHoveredId(null)}
                   onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
                 >
                   <span className="node-badge node-badge--crb">CRB</span>
                   <span className="node-name">{crb.getName()}</span>
+                  {noSubjects && <span className="node-orphaned">no subjects</span>}
+                  {noSa && <span className="node-info">no SA</span>}
                 </div>
               );
             })}
@@ -484,12 +533,13 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
             <div className="column-header">Roles &amp; ClusterRoles</div>
             {visibleRoles.map((r) => {
               const nodeId = roleNodeId(r.getNs() ?? "", r.getName());
+              const orphaned = isOrphanedRole(nodeId);
 
               return (
                 <div
                   key={nodeId}
                   data-node-id={nodeId}
-                  className={nodeClass(nodeId, "rbac-node rbac-node--role")}
+                  className={nodeClass(nodeId, "rbac-node rbac-node--role", orphaned)}
                   onMouseEnter={() => setHoveredId(nodeId)}
                   onMouseLeave={() => setHoveredId(null)}
                   onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
@@ -497,23 +547,28 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                   <span className="node-badge node-badge--role">R</span>
                   <span className="node-name">{r.getName()}</span>
                   {r.getNs() && <span className="node-ns">{r.getNs()}</span>}
+                  {orphaned && <span className="node-orphaned">orphaned</span>}
                 </div>
               );
             })}
             {visibleCRs.map((cr) => {
               const nodeId = crNodeId(cr.getName());
+              const orphaned = isOrphanedRole(nodeId);
+              const aggregated = orphaned && !!cr.aggregationRule;
 
               return (
                 <div
                   key={nodeId}
                   data-node-id={nodeId}
-                  className={nodeClass(nodeId, "rbac-node rbac-node--cr")}
+                  className={nodeClass(nodeId, "rbac-node rbac-node--cr", orphaned && !aggregated)}
                   onMouseEnter={() => setHoveredId(nodeId)}
                   onMouseLeave={() => setHoveredId(null)}
                   onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
                 >
                   <span className="node-badge node-badge--cr">CR</span>
                   <span className="node-name">{cr.getName()}</span>
+                  {aggregated && <span className="node-aggregated">aggregated</span>}
+                  {orphaned && !aggregated && <span className="node-orphaned">orphaned</span>}
                 </div>
               );
             })}
