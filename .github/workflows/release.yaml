@@ -2,6 +2,9 @@ name: Release
 
 on:
   push:
+    branches:
+      - fork-main
+      - feature-fork-main-build
     tags:
       - v*
   workflow_dispatch: {}
