@@ -352,5 +352,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: freelens-${{ matrix.os }}-${{ matrix.arch }}
-          path: freelens/dist/Freelens*.*
+          path: freelens/dist/KubeIDE*.*
           retention-days: 7

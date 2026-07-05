@@ -442,7 +442,7 @@ jobs:
         if: runner.os == 'Linux' || runner.os == 'Windows'
         shell: bash
         run: |
-          for f in freelens/dist/Freelens*.*; do
+          for f in freelens/dist/KubeIDE*.*; do
             pushd freelens/dist > /dev/null
             sha256sum $(basename $f) | tee $(basename $f).sha256
             popd > /dev/null
@@ -452,7 +452,7 @@ jobs:
         if: runner.os == 'macOS'
         shell: bash
         run: |
-          for f in freelens/dist/Freelens*.*; do
+          for f in freelens/dist/KubeIDE*.*; do
             pushd freelens/dist > /dev/null
             shasum -a 256 $(basename $f) | tee $(basename $f).sha256
             popd > /dev/null
@@ -504,14 +504,14 @@ jobs:
       - name: List files before upload
         shell: bash
         run: |
-          for f in freelens/dist/Freelens*.*; do
+          for f in freelens/dist/KubeIDE*.*; do
             echo "$(ls -l "$f")" "|" "$(file -b "$f")"
           done
 
       - name: Upload files
         shell: bash
         run: |
-          gh release upload ${GITHUB_REF_NAME#sign/} freelens/dist/Freelens*.*
+          gh release upload ${GITHUB_REF_NAME#sign/} freelens/dist/KubeIDE*.*
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
