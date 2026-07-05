@@ -20,6 +20,8 @@ import React from "react";
 import userPreferencesStateInjectable from "../../../../features/user-preferences/common/state.injectable";
 import { SearchStore } from "../../../search-store/search-store";
 import { VirtualList } from "../../virtual-list";
+import createTerminalTabInjectable from "../terminal/create-terminal-tab.injectable";
+import sendCommandInjectable from "../terminal/send-command.injectable";
 import { ToBottom } from "./to-bottom";
 
 import type { ForwardedRef } from "react";
@@ -28,6 +30,7 @@ import type { Align, ListOnScrollProps } from "react-window";
 import type { UserPreferencesState } from "../../../../features/user-preferences/common/state.injectable";
 import type { VirtualListRef } from "../../virtual-list";
 import type { LogTabViewModel } from "../logs/logs-view-model";
+import type { SendCommand } from "../terminal/send-command.injectable";
 
 export interface LogListProps {
   model: LogTabViewModel;
@@ -43,6 +46,8 @@ export interface LogListRef {
 
 interface Dependencies {
   state: UserPreferencesState;
+  sendCommand: SendCommand;
+  createTerminalTab: () => { id: string };
 }
 
 @observer
@@ -53,6 +58,7 @@ class NonForwardedLogList extends React.Component<
   @observable isLastLineVisible = true;
   @observable.ref private containerWidth = 0;
   @observable private overlapVersion = 0;
+  @observable private contextMenu: { x: number; y: number; text: string } | null = null;
 
   private virtualListDivElement: HTMLDivElement | null = null;
   private resizeObserver: ResizeObserver | null = null;
@@ -128,6 +134,7 @@ class NonForwardedLogList extends React.Component<
   componentDidMount() {
     this.updateContainerMetrics();
     window.addEventListener("resize", this.updateContainerMetrics);
+    document.addEventListener("keydown", this.handleContextMenuKeyDown);
     disposeOnUnmount(this, [
       reaction(
         () => this.props.model.logs.get(),
@@ -194,7 +201,57 @@ class NonForwardedLogList extends React.Component<
     this.resizeObserver?.disconnect();
     this.resizeObserver = null;
     window.removeEventListener("resize", this.updateContainerMetrics);
+    document.removeEventListener("keydown", this.handleContextMenuKeyDown);
     this.bindInnerRef(null);
+  }
+
+  @action
+  handleContextMenu(e: React.MouseEvent) {
+    const selection = window.getSelection()?.toString().trim();
+
+    if (!selection) {
+      return;
+    }
+    e.preventDefault();
+    this.contextMenu = { x: e.clientX, y: e.clientY, text: selection };
+  }
+
+  @action
+  closeContextMenu() {
+    this.contextMenu = null;
+  }
+
+  handleContextMenuKeyDown(e: KeyboardEvent) {
+    if (e.key === "Escape") {
+      this.closeContextMenu();
+    }
+  }
+
+  handleContextMenuCopy() {
+    navigator.clipboard.writeText(this.contextMenu?.text ?? "");
+    this.closeContextMenu();
+  }
+
+  async handleContextMenuAI() {
+    const text = this.contextMenu?.text ?? "";
+
+    this.closeContextMenu();
+    if (!text) return;
+
+    const sanitized = text
+      .replace(/"/g, '\\"')
+      .replace(/\n/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    // Create the tab first so the shell can start initializing
+    const tab = this.props.createTerminalTab();
+
+    // Wait for the shell (starship, zshrc, kubeconfig, etc.) to finish rendering
+    // before typing into the prompt, otherwise the command lands in the middle of init output
+    await new Promise<void>((resolve) => setTimeout(resolve, 1500));
+
+    await this.props.sendCommand(`gh copilot -sp "${sanitized}"`, { enter: false, tabId: tab.id });
   }
 
   private onRowRendered = (rowIndex: number) => (element: HTMLDivElement | null) => {
@@ -444,7 +501,7 @@ class NonForwardedLogList extends React.Component<
     }
 
     return (
-      <div className={cssNames("LogList flex")}>
+      <div className={cssNames("LogList flex")} onContextMenu={this.handleContextMenu}>
         <VirtualList
           items={this.logs}
           rowHeights={this.getRowHeights()}
@@ -455,6 +512,22 @@ class NonForwardedLogList extends React.Component<
           className="box grow"
         />
         {this.isJumpButtonVisible && <ToBottom onClick={this.scrollToBottom} />}
+        {this.contextMenu && (
+          <>
+            <div className="LogContextMenu-overlay" onClick={this.closeContextMenu} />
+            <div
+              className="LogContextMenu"
+              style={{ left: this.contextMenu.x, top: this.contextMenu.y }}
+            >
+              <button className="LogContextMenu-item" onClick={this.handleContextMenuCopy}>
+                Copy
+              </button>
+              <button className="LogContextMenu-item" onClick={this.handleContextMenuAI}>
+                AI
+              </button>
+            </div>
+          </>
+        )}
       </div>
     );
   }
@@ -467,6 +540,8 @@ const InjectedNonForwardedLogList = withInjectables<
   getProps: (di, props) => ({
     ...props,
     state: di.inject(userPreferencesStateInjectable),
+    sendCommand: di.inject(sendCommandInjectable),
+    createTerminalTab: di.inject(createTerminalTabInjectable),
   }),
 });
 
