@@ -50,7 +50,7 @@ jobs:
             os: windows
             arch: x64
             concurrency: windows-x64
-
+    environment: signing
     runs-on: ${{ matrix.runs-on }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref_name }}-${{ matrix.concurrency }}
