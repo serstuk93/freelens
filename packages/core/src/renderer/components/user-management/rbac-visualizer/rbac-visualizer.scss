@@ -69,6 +69,12 @@
     font-weight: 600;
     letter-spacing: 0.02em;
 
+    &.legend-sa {
+      background: rgba(38, 166, 154, 0.15);
+      color: #26a69a;
+      border: 1px solid rgba(38, 166, 154, 0.4);
+    }
+
     &.legend-rb {
       background: rgba(74, 158, 255, 0.15);
       color: #4a9eff;
@@ -79,6 +85,18 @@
       background: rgba(155, 89, 182, 0.15);
       color: #9b59b6;
       border: 1px solid rgba(155, 89, 182, 0.4);
+    }
+
+    &.legend-role {
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      border: 1px solid rgba(46, 204, 113, 0.4);
+    }
+
+    &.legend-cr {
+      background: rgba(243, 156, 18, 0.15);
+      color: #f39c12;
+      border: 1px solid rgba(243, 156, 18, 0.4);
     }
   }
 

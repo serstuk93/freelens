@@ -364,8 +364,11 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <div className="rbac-visualizer-legend">
+          <span className="legend-item legend-sa">Service Account</span>
           <span className="legend-item legend-rb">RoleBinding</span>
           <span className="legend-item legend-crb">ClusterRoleBinding</span>
+          <span className="legend-item legend-role">Role</span>
+          <span className="legend-item legend-cr">ClusterRole</span>
         </div>
       </div>
 
