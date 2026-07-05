@@ -391,8 +391,12 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           </div>
           <div className="legend-section-title">Badges</div>
           <div className="legend-badge-row">
+            <span className="legend-badge node-unbound">unbound</span>
+            <span className="legend-badge-label">Service Account not referenced by any binding — still valid as a pod identity, but currently grants no extra permissions</span>
+          </div>
+          <div className="legend-badge-row">
             <span className="legend-badge node-orphaned">orphaned</span>
-            <span className="legend-badge-label">Resource not referenced by any binding — grants access to nobody and can be safely removed</span>
+            <span className="legend-badge-label">Role or Binding not referenced by any active binding — grants access to nobody and can be safely removed</span>
           </div>
           <div className="legend-badge-row">
             <span className="legend-badge node-aggregated">aggregated</span>
@@ -455,20 +459,20 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
             ) : (
               visibleSAs.map((sa) => {
                 const nodeId = saNodeId(sa.getNs() ?? "", sa.getName());
-                const orphaned = isOrphanedSa(nodeId);
+                const unbound = isOrphanedSa(nodeId);
 
                 return (
                   <div
                     key={nodeId}
                     data-node-id={nodeId}
-                    className={nodeClass(nodeId, "rbac-node rbac-node--sa", orphaned)}
+                    className={nodeClass(nodeId, "rbac-node rbac-node--sa")}
                     onMouseEnter={() => setHoveredId(nodeId)}
                     onMouseLeave={() => setHoveredId(null)}
                     onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
                   >
                     <span className="node-name">{sa.getName()}</span>
                     {sa.getNs() && <span className="node-ns">{sa.getNs()}</span>}
-                    {orphaned && <span className="node-orphaned">orphaned</span>}
+                    {unbound && <span className="node-unbound">unbound</span>}
                   </div>
                 );
               })

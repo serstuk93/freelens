@@ -356,6 +356,20 @@
     text-transform: uppercase;
   }
 
+  .node-unbound {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: rgba(241, 196, 15, 0.14);
+    color: #f1c40f;
+    border: 1px solid rgba(241, 196, 15, 0.4);
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
   .node-badge {
     font-size: 9px;
     font-weight: 800;
