@@ -22,6 +22,7 @@ import type { RoleBindingStore } from "../role-bindings/store";
 import type { RoleStore } from "../roles/store";
 import type { ServiceAccountStore } from "../service-accounts/store";
 import type { SubscribeStores } from "../../../kube-watch-api/kube-watch-api";
+import type { ClusterRole, Role } from "@freelensapp/kube-object";
 
 // ---- Types ------------------------------------------------------------------
 
@@ -102,6 +103,15 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
   const [legendVisible, setLegendVisible] = useState(false);
+  const [popupRole, setPopupRole] = useState<Role | ClusterRole | null>(null);
+
+  // Close popup on Escape
+  useEffect(() => {
+    if (!popupRole) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setPopupRole(null); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [popupRole]);
 
   // Use the same subscription mechanism as KubeObjectListLayout so stores
   // load correctly regardless of which page was visited first.
@@ -627,6 +637,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                   onMouseEnter={() => setHoveredId(nodeId)}
                   onMouseLeave={() => setHoveredId(null)}
                   onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
+                  onDoubleClick={(e) => { e.stopPropagation(); setPopupRole(r); }}
                 >
                   <span className="node-badge node-badge--role">R</span>
                   <span className="node-name">{r.getName()}</span>
@@ -648,6 +659,7 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
                   onMouseEnter={() => setHoveredId(nodeId)}
                   onMouseLeave={() => setHoveredId(null)}
                   onClick={(e) => { e.stopPropagation(); handleNodeClick(nodeId); }}
+                  onDoubleClick={(e) => { e.stopPropagation(); setPopupRole(cr); }}
                 >
                   <span className="node-badge node-badge--cr">CR</span>
                   <span className="node-name">{cr.getName()}</span>
@@ -662,6 +674,66 @@ const NonInjectedRbacVisualizer = observer((props: Dependencies) => {
           </div>
         </div>
       </div>
+
+      {/* Role rules popup */}
+      {popupRole && (
+        <div className="rbac-role-popup-overlay" onClick={() => setPopupRole(null)}>
+          <div className="rbac-role-popup" onClick={(e) => e.stopPropagation()}>
+            <div className="rbac-role-popup-header">
+              <div className="rbac-role-popup-title">
+                <span className={`node-badge node-badge--${popupRole.kind === "Role" ? "role" : "cr"}`}>
+                  {popupRole.kind === "Role" ? "R" : "CR"}
+                </span>
+                <span>{popupRole.getName()}</span>
+                {popupRole.getNs() && <span className="node-ns">{popupRole.getNs()}</span>}
+              </div>
+              <button className="rbac-role-popup-close" onClick={() => setPopupRole(null)} type="button">×</button>
+            </div>
+            <div className="rbac-role-popup-body">
+              {popupRole.getRules().length === 0 ? (
+                <div className="rbac-rule-empty">No rules defined</div>
+              ) : (
+                popupRole.getRules().map((rule, i) => (
+                  <div key={i} className="rbac-rule">
+                    {rule.resources && (
+                      <div className="rbac-rule-row">
+                        <span className="rbac-rule-label">Resources</span>
+                        <span className="rbac-rule-value">{rule.resources.join(", ")}</span>
+                      </div>
+                    )}
+                    {rule.nonResourceURLs && (
+                      <div className="rbac-rule-row">
+                        <span className="rbac-rule-label">Non-resource URLs</span>
+                        <span className="rbac-rule-value">{rule.nonResourceURLs.join(", ")}</span>
+                      </div>
+                    )}
+                    {rule.verbs && (
+                      <div className="rbac-rule-row">
+                        <span className="rbac-rule-label">Verbs</span>
+                        <span className="rbac-rule-value">{rule.verbs.join(", ")}</span>
+                      </div>
+                    )}
+                    {rule.apiGroups && (
+                      <div className="rbac-rule-row">
+                        <span className="rbac-rule-label">API Groups</span>
+                        <span className="rbac-rule-value">
+                          {rule.apiGroups.map((g) => (g === "" ? `\"\"` : g)).join(", ")}
+                        </span>
+                      </div>
+                    )}
+                    {rule.resourceNames && (
+                      <div className="rbac-rule-row">
+                        <span className="rbac-rule-label">Resource names</span>
+                        <span className="rbac-rule-value">{rule.resourceNames.join(", ")}</span>
+                      </div>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 });
